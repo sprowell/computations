@@ -112,6 +112,21 @@ key "pfeiffer1978concepts"
 \end_layout
 
 \begin_layout Section
+R
+\end_layout
+
+\begin_layout Standard
+The algorithms presented in this document can be executed using R.
+ This is a freely-available software package which runs on many different
+ platforms.
+ Information about R is available online.
+\end_layout
+
+\begin_layout LyX-Code
+https://www.r-project.org/
+\end_layout
+
+\begin_layout Section
 Notation
 \end_layout
 
@@ -688,10 +703,10 @@ The variance of a random variable
 \begin_inset Formula 
 \begin{align}
 \Var X & =\E{(X-\E X)^{2}}\nonumber \\
- & =\E{X^{2}-2X\E X+\En 2X}\nonumber \\
- & =\E{X^{2}}-\E{2X\E X}+\En 2X\nonumber \\
- & =\E{X^{2}}-2\E X\E X+\En 2X\nonumber \\
- & =\E{X^{2}}-\En 2X\label{eq:varform}
+ & =\E{X^{2}-2X\E X+\En2X}\nonumber \\
+ & =\E{X^{2}}-\E{2X\E X}+\En2X\nonumber \\
+ & =\E{X^{2}}-2\E X\E X+\En2X\nonumber \\
+ & =\E{X^{2}}-\En2X\label{eq:varform}
 \end{align}
 
 \end_inset
@@ -826,7 +841,7 @@ completely dependent
 \begin_inset Formula 
 \begin{align*}
 \Cov XY & =\E{XY}-\E X\E Y & \mbox{for independent }X,Y\\
- & =\E{X^{2}}-\En 2X\\
+ & =\E{X^{2}}-\En2X\\
  & =\Var X=\Var Y
 \end{align*}
 
@@ -848,12 +863,12 @@ Consider the variance of the sum of two random variables
  This can be written as follows.
 \begin_inset Formula 
 \begin{align*}
-\Var{X+Y}={} & \E{(X+Y)^{2}}-\En 2{X+Y}\\
+\Var{X+Y}={} & \E{(X+Y)^{2}}-\En2{X+Y}\\
 ={} & \E{X^{2}+2XY+Y^{2}}-\left(\E{X+Y}\right)^{2}\\
 ={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}-\left(\E X+\E Y\right)^{2}\\
 ={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}\\
- & -(\En 2X+2\E X\E Y+\En 2Y)\\
-={} & \left(\E{X^{2}}-\En 2X\right)+\left(\E{Y^{2}}-\En 2Y\right)\\
+ & -(\En2X+2\E X\E Y+\En2Y)\\
+={} & \left(\E{X^{2}}-\En2X\right)+\left(\E{Y^{2}}-\En2Y\right)\\
  & +2\E{XY}-2\E X\E Y\\
 ={} & \Var X+\Var Y+2\left(\E{XY}-\E X\E Y\right)\\
 ={} & \Var X+\Var Y+2\Cov XY

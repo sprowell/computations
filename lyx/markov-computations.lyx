@@ -140,6 +140,216 @@ Example model
 
 \end_inset
 
+ TML
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+TML
+\end_layout
+
+\end_inset
+
+ is a language developed for representing Markov chain usage models 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "prowell2000tml"
+
+\end_inset
+
+.
+ This model is equivalent to the following TML.
+\end_layout
+
+\begin_layout LyX-Code
+model example
+\end_layout
+
+\begin_layout LyX-Code
+[Enter] ($  1  $) "a" [A]
+\end_layout
+
+\begin_layout LyX-Code
+[A]     ($ 1/2 $) "b" [B]
+\end_layout
+
+\begin_layout LyX-Code
+        ($ 1/2 $) "c" [C]
+\end_layout
+
+\begin_layout LyX-Code
+[B]     ($ 1/2 $) "b" [B]
+\end_layout
+
+\begin_layout LyX-Code
+        ($ 1/4 $) "c" [C]
+\end_layout
+
+\begin_layout LyX-Code
+        ($ 1/4 $) "e" [Exit]
+\end_layout
+
+\begin_layout LyX-Code
+[C]     ($ 1/4 $) "a" [A]
+\end_layout
+
+\begin_layout LyX-Code
+        ($ 1/2 $) "e" [Exit]
+\end_layout
+
+\begin_layout LyX-Code
+        ($ 1/4 $) "f" [Exit]
+\end_layout
+
+\begin_layout LyX-Code
+end
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are two special states in this model: the 
+\emph on
+source
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+source
+\end_layout
+
+\end_inset
+
+
+\emph default
+ state 
+\family typewriter
+[Enter]
+\family default
+, and the 
+\emph on
+sink
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+sink
+\end_layout
+
+\end_inset
+
+
+\emph default
+ state 
+\family typewriter
+[Exit]
+\family default
+.
+ The source state represents the start of a test, and the sink state represents
+ the end of a test (or use), and no usage events are possible from the sink
+ state.
+\end_layout
+
+\begin_layout Standard
+This example model can be described by two matrices.
+ For these matrices let the states be indexed in the order 
+\family typewriter
+[Enter]
+\family default
+, 
+\family typewriter
+[A]
+\family default
+, 
+\family typewriter
+[B]
+\family default
+, 
+\family typewriter
+[C]
+\family default
+, 
+\family typewriter
+[Exit]
+\family default
+, and let the stimuli be indexed in the order 
+\family typewriter
+"a"
+\family default
+, 
+\family typewriter
+"b"
+\family default
+, 
+\family typewriter
+"c"
+\family default
+, 
+\family typewriter
+"e"
+\family default
+, and 
+\family typewriter
+"f"
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The first matrix is the 
+\emph on
+(state) transition
+\emph default
+ matrix
+\emph on
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+transition matrix
+\end_layout
+
+\end_inset
+
+,
+\emph default
+ 
+\begin_inset Formula $P=[p_{i,j}]$
+\end_inset
+
+, for which 
+\begin_inset Formula $p_{i,j}$
+\end_inset
+
+ is the probability that the next state in a realization is 
+\begin_inset Formula $j$
+\end_inset
+
+, given that the current state is 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ For the example model the transition matrix is the following.
+\begin_inset Formula 
+\[
+P=\left[\begin{array}{ccccc}
+0 & 1 & 0 & 0 & 0\\
+0 & 0 & \frac{1}{2} & \frac{1}{2} & 0\\
+0 & 0 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4}\\
+0 & \frac{1}{4} & 0 & 0 & \frac{3}{4}\\
+1 & 0 & 0 & 0 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
 
 \end_layout
 
