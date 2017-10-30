@@ -1,0 +1,16 @@
+
+digraph Example {
+    Enter; A; C; B; Exit;
+    Enter [color=green,penwidth=2];
+    Exit [color=red,penwidth=2];
+    Enter -> A [label="a\n(1.00)"];
+    A -> B [label="b\n(0.50)"];
+    A -> C [label="c\n(0.50)"];
+    B -> B [label="b\n(0.50)"];
+    B -> C [label="c\n(0.25)"];
+    B -> Exit [label="e\n(0.25)"];
+    C -> A [label="a\n(0.25)"];
+    C -> Exit [label="e\n(0.50)"];
+    C -> Exit [label="f\n(0.25)"];
+}
+

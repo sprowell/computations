@@ -1,0 +1,1120 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsbook
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Preliminary Definitions
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lettrine[lraise=0.1]{T}{his}
+\end_layout
+
+\end_inset
+
+ chapter summarizes some basic results used in the remainder of the document.
+ See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "horn1985matrix"
+
+\end_inset
+
+ for a discussion of Matrix analysis and see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pfeiffer1978concepts"
+
+\end_inset
+
+ for a discussion of probability theory.
+\end_layout
+
+\begin_layout Section
+Notation
+\end_layout
+
+\begin_layout Standard
+Throughout this document the term 
+\begin_inset Quotes eld
+\end_inset
+
+iff
+\begin_inset Quotes erd
+\end_inset
+
+ will be understood to mean 
+\begin_inset Quotes eld
+\end_inset
+
+if and only if.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Every 
+\emph on
+random variable
+\emph default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+random variable
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $X$
+\end_inset
+
+ has an associated probability distribution 
+\begin_inset Formula $P:X\to[0,1]$
+\end_inset
+
+ such that 
+\begin_inset Formula $\int_{X}dP=1$
+\end_inset
+
+.
+ For a random variable 
+\begin_inset Formula $X$
+\end_inset
+
+ with associated probability distribution 
+\begin_inset Formula $P$
+\end_inset
+
+, the probability of a particular outcome 
+\begin_inset Formula $\Pr{X=x}$
+\end_inset
+
+ will be denoted 
+\begin_inset Formula $p(x)$
+\end_inset
+
+.
+ Thus if one has two random variables 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+, and writes 
+\begin_inset Formula $p(x)p(y)$
+\end_inset
+
+, it should be understood that this denotes 
+\begin_inset Formula $\Pr{X=x}\Pr{Y=y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+joint probability
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+joint probability
+\end_layout
+
+\end_inset
+
+
+\emph default
+ 
+\begin_inset Formula $\Pr{X=x\,\wedge\,Y=y}$
+\end_inset
+
+ will be denoted 
+\begin_inset Formula $p(x\&y)$
+\end_inset
+
+.
+ The conditional probability 
+\begin_inset Formula $\Pr{Y=y\,|\,X=y}$
+\end_inset
+
+ will be denoted 
+\begin_inset Formula $p(y|x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+Kronecker delta
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Kronecker delta
+\end_layout
+
+\end_inset
+
+
+\emph default
+ 
+\begin_inset Formula $\delta_{i,j}$
+\end_inset
+
+ extended to the real numbers is defined for 
+\begin_inset Formula $i\in\mathbb{R}$
+\end_inset
+
+ as follows.
+\begin_inset Formula 
+\[
+\delta_{i,j}=\begin{cases}
+0 & \text{if }i\neq j\\
+1 & \text{if }i=j
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Both matrices
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+matrix
+\end_layout
+
+\end_inset
+
+ and random variables will be denoted by upper-case letters, and elements
+ of matrices by lower-case letters.
+ For example, the 
+\begin_inset Formula $m\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $A$
+\end_inset
+
+ consists of 
+\begin_inset Formula $mn$
+\end_inset
+
+ elements 
+\begin_inset Formula $a_{i,j}$
+\end_inset
+
+, where 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ are the row and column indices of the element, respectively.
+ To make the association clear, matrix 
+\begin_inset Formula $A$
+\end_inset
+
+ may be written 
+\begin_inset Formula $A=[a_{i,j}]$
+\end_inset
+
+.
+ It will often be useful to refer to a single column or row of a matrix.
+ We will do this by writing a star (
+\begin_inset Formula $\star$
+\end_inset
+
+) for an index, so that 
+\begin_inset Formula $[a_{i,\star}]$
+\end_inset
+
+ is the 
+\begin_inset Formula $i$
+\end_inset
+
+th row of a matrix, and 
+\begin_inset Formula $[a_{\star,j}]$
+\end_inset
+
+ is the 
+\begin_inset Formula $j$
+\end_inset
+
+th column of a matrix.
+ For any matrix 
+\begin_inset Formula $A=[a_{i,j}]$
+\end_inset
+
+ we let 
+\begin_inset Formula $A_{d}=[a_{i,j}\delta_{i,j}]$
+\end_inset
+
+ denote the matrix consisting of the diagonal of 
+\begin_inset Formula $A$
+\end_inset
+
+, with zeros for all all-diagonal entries.
+ Whenever necessary we let 
+\begin_inset Formula $U=[1]$
+\end_inset
+
+ denote a matrix of ones of appropriate size.
+\end_layout
+
+\begin_layout Section
+Expectation of random variables
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+expectation
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+expectation
+\end_layout
+
+\end_inset
+
+
+\emph default
+ of a random variable 
+\begin_inset Formula $X$
+\end_inset
+
+, denoted 
+\begin_inset Formula $\E X$
+\end_inset
+
+, is an unbiased estimator of the random variable's value.
+ In the discrete case this expectation is a probability-weighted average
+ of the random variable's values.
+\begin_inset Formula 
+\[
+\E X=\sum_{x\in X}x\cdot p(x)
+\]
+
+\end_inset
+
+As a special case consider a random variable 
+\begin_inset Formula $C$
+\end_inset
+
+ that takes on the value 
+\begin_inset Formula $x$
+\end_inset
+
+ with probability one.
+ Then 
+\begin_inset Formula $\E C=x$
+\end_inset
+
+.
+ In other words the expectation of a constant is just that constant.
+ Since the value of an expectation is itself a constant, we can conclude
+ that 
+\begin_inset Formula $\E{\E X}=\E X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Mathematical expectation exhibits several useful properties, some of which
+ are presented here without proof.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Linearity
+\emph default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+expectation!linearity
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Formula $\E{\sum_{i=1}^{n}a_{i}X_{i}}=\sum_{i=1}^{n}a_{i}\E{X_{i}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Positivity
+\emph default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+expectation!positivity
+\end_layout
+
+\end_inset
+
+: If 
+\begin_inset Formula $X\ge0$
+\end_inset
+
+ then 
+\begin_inset Formula $\E X\ge0$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $X\ge Y$
+\end_inset
+
+ then 
+\begin_inset Formula $\E X\ge\E Y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E{|X|}\ge\left|\E X\right|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Cauchy-Schwarz Inequality
+\emph default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Cauchy-Schwarz inequality
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Formula $\left|\E{XY}\right|^{2}\le\E{X^{2}}\E{Y^{2}}$
+\end_inset
+
+; equality holds iff there is a real constant 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ such that 
+\begin_inset Formula $\lambda X+Y=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Jensen's Inequality
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Jensen's inequality
+\end_layout
+
+\end_inset
+
+
+\emph default
+: Let 
+\begin_inset Formula $g:\mathbb{R}\to\mathbb{R}$
+\end_inset
+
+ be a convex Borel
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Borel sets and functions are important to a rigorous study of probability,
+ but can be ignored for the purpose of this text.
+\end_layout
+
+\end_inset
+
+ function.
+ Then 
+\begin_inset Formula $g(\E X)\le\E{g(x)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For two random variables 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+, we conclude the following.
+\begin_inset Formula 
+\[
+\begin{aligned}\E{XY} & =\sum_{x\in X,y\in Y}xy\cdot p(x\&y)\end{aligned}
+\]
+
+\end_inset
+
+Iff the two random variables are independent
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+random variable!independence
+\end_layout
+
+\end_inset
+
+, then 
+\begin_inset Formula $p(x\&y)=p(x)p(y).$
+\end_inset
+
+ In this case we have the following short derivation of an important property.
+\begin_inset Formula 
+\begin{align}
+\E{XY} & =\sum_{x\in X,y\in Y}xy\cdot p(x\&y)\nonumber \\
+ & =\sum_{x\in X,y\in Y}xy\cdot p(x)p(y)\nonumber \\
+ & =\sum_{x\in X,y\in Y}x\cdot p(x)\cdot y\cdot p(y)\nonumber \\
+ & =\left(\sum_{x\in X}x\cdot p(x)\right)\left(\sum_{y\in Y}y\cdot p(y)\right)\nonumber \\
+ & =\E X\E Y\label{eq:E(XY) indep}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Variance and covariance of random variables
+\end_layout
+
+\begin_layout Standard
+How far can one expect the value of a random variable 
+\begin_inset Formula $X$
+\end_inset
+
+ to differ from its expectation 
+\begin_inset Formula $\E X$
+\end_inset
+
+? That is, what is the expectation of 
+\begin_inset Formula $\left|X-\E X\right|$
+\end_inset
+
+? This question is answered by the 
+\emph on
+variance
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+variance
+\end_layout
+
+\end_inset
+
+
+\emph default
+ 
+\begin_inset Formula $\Var X$
+\end_inset
+
+ of the random variable, which is the expectation of the square of the differenc
+e between the observed value and the expected value.
+\begin_inset Formula 
+\[
+\Var X=\E{(X-\E X)^{2}}
+\]
+
+\end_inset
+
+One can 
+\begin_inset Quotes eld
+\end_inset
+
+scale
+\begin_inset Quotes erd
+\end_inset
+
+ the variance back by taking the square root.
+ This is called the 
+\emph on
+standard deviation
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+standard deviation
+\end_layout
+
+\end_inset
+
+
+\emph default
+ 
+\begin_inset Formula $\stddev X=\sqrt{\Var X}$
+\end_inset
+
+.
+ The advantage of the standard deviation is that it has the same dimensionality
+ and units as the random variable itself.
+\end_layout
+
+\begin_layout Standard
+The variance of a random variable 
+\begin_inset Formula $X$
+\end_inset
+
+ can be restated using linerarity and the definition of expectation as follows.
+\begin_inset Formula 
+\begin{align}
+\Var X & =\E{(X-\E X)^{2}}\nonumber \\
+ & =\E{X^{2}-2X\E X+\En 2X}\nonumber \\
+ & =\E{X^{2}}-\E{2X\E X}+\En 2X\nonumber \\
+ & =\E{X^{2}}-2\E X\E X+\En 2X\nonumber \\
+ & =\E{X^{2}}-\En 2X\label{eq:varform}
+\end{align}
+
+\end_inset
+
+Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:varform"
+
+\end_inset
+
+ is a commonly-encountered, and useful, formula for variance.
+\end_layout
+
+\begin_layout Standard
+Consider two random variables, 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+.
+ We already know from eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E(XY) indep"
+
+\end_inset
+
+ that if 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are independent we have 
+\begin_inset Formula $\E{XY}=\E X\E Y$
+\end_inset
+
+.
+ It is reasonable to ask how much 
+\begin_inset Formula $\E{XY}$
+\end_inset
+
+ and 
+\begin_inset Formula $\E X\E Y$
+\end_inset
+
+ differ when the two are 
+\emph on
+not
+\emph default
+ independent.
+ This is the 
+\emph on
+covariance
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+covariance
+\end_layout
+
+\end_inset
+
+
+\emph default
+ of 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+, and it is defined as follows.
+\begin_inset Formula 
+\begin{align*}
+\Cov XY & =\E{XY}-\E X\E Y
+\end{align*}
+
+\end_inset
+
+Obviously if 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are independent, then one has 
+\begin_inset Formula $\Cov XY=0$
+\end_inset
+
+.
+ Consider the special case where 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are 
+\begin_inset Quotes eld
+\end_inset
+
+completely dependent
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\begin_inset Formula $X=Y$
+\end_inset
+
+), such as when one state of a Markov chain unconditionally follows another
+ in all realizations.
+ In this special case one has the following derivation.
+\begin_inset Formula 
+\begin{align*}
+\Cov XY & =\E{XY}-\E X\E Y & \mbox{for independent }X,Y\\
+ & =\E{X^{2}}-\En 2X\\
+ & =\Var X=\Var Y
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Consider the variance of the sum of two random variables 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+.
+ This can be written as follows.
+\begin_inset Formula 
+\begin{align*}
+\Var{X+Y}={} & \E{(X+Y)^{2}}-\En 2{X+Y}\\
+={} & \E{X^{2}+2XY+Y^{2}}-\left(\E{X+Y}\right)^{2}\\
+={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}-\left(\E X+\E Y\right)^{2}\\
+={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}\\
+ & -(\En 2X+2\E X\E Y+\En 2Y)\\
+={} & \left(\E{X^{2}}-\En 2X\right)+\left(\E{Y^{2}}-\En 2Y\right)\\
+ & +2\E{XY}-2\E X\E Y\\
+={} & \Var X+\Var Y+2\left(\E{XY}-\E X\E Y\right)\\
+={} & \Var X+\Var Y+2\Cov XY
+\end{align*}
+
+\end_inset
+
+If 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are independent
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+random variable!independent
+\end_layout
+
+\end_inset
+
+ random variables, one has 
+\begin_inset Formula $\Var{X+Y}=\Var X+\Var Y$
+\end_inset
+
+.
+ (The converse is not true; 
+\begin_inset Formula $\Cov XY=0$
+\end_inset
+
+ does 
+\emph on
+not
+\emph default
+ guarantee that 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are independent.)
+\end_layout
+
+\begin_layout Standard
+An alternate way to think about the covariance is to consider the 
+\begin_inset Quotes eld
+\end_inset
+
+joint variance,
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\E{(X-\E X)(Y-\E Y)}$
+\end_inset
+
+.
+\backslash
+
+\begin_inset Formula 
+\begin{align*}
+ & \E{(X-\E X)(Y-\E Y)}\\
+ & \quad=\E{XY-X\E Y-Y\E X+\E X\E Y}\\
+ & \quad=\E{XY}-\E X\E Y-\E X\E Y+\E X\E Y\\
+ & \quad=\E{XY}-\E X\E Y\\
+ & \quad=\Cov XY
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are not independent, then one can use the Cauchy-Schwarz inequality
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Cauchy-Schwarz inequality
+\end_layout
+
+\end_inset
+
+ to obtain an upper bound for 
+\begin_inset Formula $\Var{X+Y}$
+\end_inset
+
+ (if the covariance is not readily computable and no better bound is available).
+\begin_inset Formula 
+\begin{align}
+\left|\Cov XY\right|^{2}={} & \left|\E{(X-\E X)(Y-\E Y)}\right|^{2}\nonumber \\
+={} & \left|\E{UV}\right|^{2}\nonumber \\
+\le{} & \E{U^{2}}\E{V^{2}}\nonumber \\
+\le{} & \E{(X-\E X)^{2}}\E{(Y-\E Y)^{2}}\nonumber \\
+\le{} & \Var X\Var Y\label{eq:cov to var}
+\end{align}
+
+\end_inset
+
+Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cov to var"
+
+\end_inset
+
+ bounds the covariance as 
+\begin_inset Formula $\left|\Cov XY\right|\le\sqrt{\Var X\Var Y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+While the variance does not have as many nice properties as the expectation,
+ a more intuitive sense of what it means can be obtained by applying the
+ 
+\emph on
+Chebyshev inequality
+\emph default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Chebyshev inequality
+\end_layout
+
+\end_inset
+
+.
+ This states that the probability that the observed value 
+\begin_inset Formula $x$
+\end_inset
+
+ of random variable 
+\begin_inset Formula $X$
+\end_inset
+
+ differs from the expectation 
+\begin_inset Formula $\E X$
+\end_inset
+
+ by at least 
+\begin_inset Formula $k$
+\end_inset
+
+, for some positive 
+\begin_inset Formula $k$
+\end_inset
+
+, is bounded above by 
+\begin_inset Formula $\Var X/k^{2}$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{equation}
+\Pr{\left|X-\E X\right|\ge k}\le\frac{\Var X}{k^{2}}\label{eq:cheb}
+\end{equation}
+
+\end_inset
+
+Note that nothing has been said about the distribution of 
+\begin_inset Formula $X$
+\end_inset
+
+; eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cheb"
+
+\end_inset
+
+ is a 
+\emph on
+statistically conservative
+\emph default
+ upper bound.
+ It may be possible to do much better if more is known about the random
+ variable.
+\end_layout
+
+\begin_layout Standard
+The probability that an observation of a random variable falls in a given
+ interval is the 
+\emph on
+confidence
+\emph default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+confidence
+\end_layout
+
+\end_inset
+
+.
+ As an example, we can apply the Chebychev inequality to compute the 95%
+ confidence interval.
+\begin_inset Formula 
+\begin{align*}
+0.95 & \le\frac{\Var X}{k^{2}}\\
+k^{2} & \le\frac{\Var X}{0.95}\\
+k & \le\sqrt{\frac{\Var X}{0.95}}
+\end{align*}
+
+\end_inset
+
+We interpret this to say that 
+\emph on
+at least
+\emph default
+ 95% of the time the observed value of 
+\begin_inset Formula $X$
+\end_inset
+
+ will be in the following closed interval, which we can refer to as the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+95% confidence interval.
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[\E X-\sqrt{\frac{\Var X}{0.95}},\E X+\sqrt{\frac{\Var X}{0.95}}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
