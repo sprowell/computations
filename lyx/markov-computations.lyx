@@ -104,6 +104,18 @@ reference "fig:Example-model"
 \end_inset
 
 .
+ We can express this model in a computer-readable manner in many different
+ ways, but one relatively human-friendly manner is TML.
+ TML is a text-based language explicitly developed for representing Markov
+ chain usage models 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "prowell2000tml"
+
+\end_inset
+
+.
+ The given model is equivalent to the following TML.
 \begin_inset Float figure
 wide false
 sideways false
@@ -111,7 +123,7 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename figures/example.eps
+	filename ../../../Desktop/Publications/Computations/example.eps
 	scale 75
 
 \end_inset
@@ -134,31 +146,133 @@ Example model
 
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
+
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace defskip
 \end_inset
 
- TML
-\begin_inset Index idx
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
-\begin_layout Plain Layout
-TML
+\begin_layout LyX-Code
+model example
+\end_layout
+
+\begin_layout LyX-Code
+[Enter]  ($  1  $)  "a"  [A]
+\end_layout
+
+\begin_layout LyX-Code
+[A]      ($ 1/2 $)  "b"  [B]
+\end_layout
+
+\begin_layout LyX-Code
+         ($ 1/2 $)  "c"  [C]
+\end_layout
+
+\begin_layout LyX-Code
+[B]      ($ 1/2 $)  "b"  [B]
+\end_layout
+
+\begin_layout LyX-Code
+         ($ 1/4 $)  "c"  [C]
+\end_layout
+
+\begin_layout LyX-Code
+         ($ 1/4 $)  "e"  [Exit]
+\end_layout
+
+\begin_layout LyX-Code
+[C]      ($ 1/4 $)  "a"  [A]
+\end_layout
+
+\begin_layout LyX-Code
+         ($ 1/2 $)  "e"  [Exit]
+\end_layout
+
+\begin_layout LyX-Code
+         ($ 1/4 $)  "f"  [Exit]
+\end_layout
+
+\begin_layout LyX-Code
+end
 \end_layout
 
 \end_inset
 
- is a language developed for representing Markov chain usage models 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "prowell2000tml"
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A short primer on TML is included as Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:A-TML-Primer"
 
 \end_inset
 
-.
- This model is equivalent to the following TML.
+, but we note that whitespace is not significant to TML, and the model could
+ have been written in the following form, where the probabilities are inferred.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 1
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout LyX-Code
+($assume(1) normalize(1)$)
 \end_layout
 
 \begin_layout LyX-Code
@@ -166,47 +280,52 @@ model example
 \end_layout
 
 \begin_layout LyX-Code
-[Enter] ($  1  $) "a" [A]
+[Enter]   "a" [A]
 \end_layout
 
 \begin_layout LyX-Code
-[A]     ($ 1/2 $) "b" [B]
+[A]       "b" [B]
 \end_layout
 
 \begin_layout LyX-Code
-        ($ 1/2 $) "c" [C]
+          "c" [C]
 \end_layout
 
 \begin_layout LyX-Code
-[B]     ($ 1/2 $) "b" [B]
+[B] ($2$) "b" [B]
 \end_layout
 
 \begin_layout LyX-Code
-        ($ 1/4 $) "c" [C]
+          "c" [C]
 \end_layout
 
 \begin_layout LyX-Code
-        ($ 1/4 $) "e" [Exit]
+          "e" [Exit]
 \end_layout
 
 \begin_layout LyX-Code
-[C]     ($ 1/4 $) "a" [A]
+[C]       "a" [A]
 \end_layout
 
 \begin_layout LyX-Code
-        ($ 1/2 $) "e" [Exit]
+    ($2$) "e" [Exit]
 \end_layout
 
 \begin_layout LyX-Code
-        ($ 1/4 $) "f" [Exit]
+          "f" [Exit]
 \end_layout
 
 \begin_layout LyX-Code
 end
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-\begin_inset Separator plain
+\begin_inset VSpace defskip
 \end_inset
 
 
@@ -216,47 +335,26 @@ end
 There are two special states in this model: the 
 \emph on
 source
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-source
-\end_layout
-
-\end_inset
-
-
 \emph default
- state 
+ or start state 
 \family typewriter
 [Enter]
 \family default
 , and the 
 \emph on
 sink
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-sink
-\end_layout
-
-\end_inset
-
-
 \emph default
- state 
+ or stop state 
 \family typewriter
 [Exit]
 \family default
 .
- The source state represents the start of a test, and the sink state represents
- the end of a test (or use), and no usage events are possible from the sink
- state.
+ The sink state represents the end of a single use and thus no usage events
+ are possible from this state.
 \end_layout
 
 \begin_layout Standard
-This example model can be described by two matrices.
+This model can be described by two matrices.
  For these matrices let the states be indexed in the order 
 \family typewriter
 [Enter]
@@ -273,53 +371,16 @@ This example model can be described by two matrices.
 \family typewriter
 [C]
 \family default
-, 
+, and 
 \family typewriter
 [Exit]
 \family default
-, and let the stimuli be indexed in the order 
-\family typewriter
-"a"
-\family default
-, 
-\family typewriter
-"b"
-\family default
-, 
-\family typewriter
-"c"
-\family default
-, 
-\family typewriter
-"e"
-\family default
-, and 
-\family typewriter
-"f"
-\family default
-.
-\end_layout
-
-\begin_layout Standard
-The first matrix is the 
+, and let the stimuli be indexed in alphabetic order.
+ The first matrix is the 
 \emph on
-(state) transition
+(state) transition matrix
 \emph default
- matrix
-\emph on
-
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-transition matrix
-\end_layout
-
-\end_inset
-
-,
-\emph default
- 
+, 
 \begin_inset Formula $P=[p_{i,j}]$
 \end_inset
 
@@ -327,11 +388,11 @@ transition matrix
 \begin_inset Formula $p_{i,j}$
 \end_inset
 
- is the probability that the next state in a realization is 
+ is the probability that the next state is 
 \begin_inset Formula $j$
 \end_inset
 
-, given that the current state is 
+ given that the current state is 
 \begin_inset Formula $i$
 \end_inset
 
@@ -348,6 +409,508 @@ P=\left[\begin{array}{ccccc}
 \end{array}\right]
 \]
 
+\end_inset
+
+Note that the example matrix has been made 
+\emph on
+recurrent
+\emph default
+ by connecting 
+\family typewriter
+[Exit]
+\family default
+ back to 
+\family typewriter
+[Enter]
+\family default
+ with probability one.
+ This will be important for several computations, and is assumed where necessary.
+ Note that there are two transitions from state 
+\family typewriter
+[C]
+\family default
+ to state 
+\family typewriter
+[Exit]
+\family default
+; these two transitions are mutually exclusive, so the probability that
+ the next state is 
+\family typewriter
+[Exit]
+\family default
+ given that the current state is 
+\family typewriter
+[C]
+\family default
+ is the sum of the two: 
+\begin_inset Formula $\frac{1}{4}+\frac{1}{2}=\frac{3}{4}$
+\end_inset
+
+.
+ For many computations it will be sueful to have a reduced matrix 
+\begin_inset Formula $Q=[q_{i,j}]$
+\end_inset
+
+ in which the row and column for the model sink have been removed.
+ For the example model the reduced matrix is the following.
+\begin_inset Formula 
+\[
+Q=\left[\begin{array}{cccc}
+0 & 1 & 0 & 0\\
+0 & 0 & \frac{1}{2} & \frac{1}{2}\\
+0 & 0 & \frac{1}{2} & \frac{1}{4}\\
+0 & \frac{1}{4} & 0 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+Both 
+\begin_inset Formula $P$
+\end_inset
+
+ and 
+\begin_inset Formula $Q$
+\end_inset
+
+ are always square matrices.
+\end_layout
+
+\begin_layout Standard
+The second matrix is the 
+\emph on
+stimulus (occurrence) matrix
+\emph default
+ 
+\begin_inset Formula $S=[s_{i,j}]$
+\end_inset
+
+, for which 
+\begin_inset Formula $s_{i,j}$
+\end_inset
+
+ is the probability that the next usage event (or 
+\emph on
+stimulus
+\emph default
+) will be 
+\begin_inset Formula $j$
+\end_inset
+
+, given that the current state is 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ For the example model the stimulus matrix is the following.
+\begin_inset Formula 
+\[
+S=\left[\begin{array}{ccccc}
+1 & 0 & 0 & 0 & 0\\
+0 & \frac{1}{2} & \frac{1}{2} & 0 & 0\\
+0 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & 0\\
+\frac{1}{4} & 0 & 0 & \frac{1}{2} & \frac{1}{4}
+\end{array}\right]
+\]
+
+\end_inset
+
+The usage models used here are deterministic; a stimulus can only label
+ one outgoing transition from a state, so there is no need to sum transition
+ probabilities in the stimulus matrix.
+\end_layout
+
+\begin_layout Standard
+It will occasionally be convenient to discuss the probability of a transition
+ from state 
+\begin_inset Formula $i$
+\end_inset
+
+ to state 
+\begin_inset Formula $j$
+\end_inset
+
+ labeled with stimulus 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ This probability will be denoted 
+\begin_inset Formula $p_{i,j,k}$
+\end_inset
+
+ when needed.
+ The 
+\emph on
+restriction
+\emph default
+ of a matrix 
+\begin_inset Formula $A$
+\end_inset
+
+ to just those elements corresponding to stimulus 
+\begin_inset Formula $k$
+\end_inset
+
+ will be denoted 
+\begin_inset Formula $A|_{k}$
+\end_inset
+
+.
+ Thus 
+\begin_inset Formula $Q|_{k}=[q_{i,j,k}]$
+\end_inset
+
+ for fixed 
+\begin_inset Formula $k$
+\end_inset
+
+, and we also have the following.
+\begin_inset Formula 
+\[
+Q=\sum_{k}Q|_{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Throughout the rest of this document, the source will be assumed to have
+ index one, while the sink will be assumed to have the highest index 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ The number of stimuli for a model will be denoted 
+\begin_inset Formula $s$
+\end_inset
+
+.
+ Thus 
+\begin_inset Formula $P$
+\end_inset
+
+ is always an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix, while 
+\begin_inset Formula $S$
+\end_inset
+
+ is always an 
+\begin_inset Formula $(n-1)\times s$
+\end_inset
+
+ matrix, since there can be no outgoing arcs (other than the unlabeled recurrenc
+e loop) from the sink.
+\end_layout
+
+\begin_layout Standard
+For every state 
+\begin_inset Formula $i$
+\end_inset
+
+ in a proper model, there is a non-zero probability path from the source
+ to 
+\begin_inset Formula $i$
+\end_inset
+
+, and a non-zero probability path from 
+\begin_inset Formula $i$
+\end_inset
+
+ to the sink.
+ Because of the recurrence loop the graph of the model is strongly connected,
+ meaning that from any state 
+\begin_inset Formula $i$
+\end_inset
+
+ there is a path to any other state 
+\begin_inset Formula $j$
+\end_inset
+
+.
+ It follows that 
+\begin_inset Formula $P$
+\end_inset
+
+ is an irreducible matrix (see Theorem 6.2.24 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "horn1985matrix"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Section
+Number of occurrences of a state in a test case
+\end_layout
+
+\begin_layout Standard
+The number of occurrences of a state in a test case can be computed using
+ the reduced matrix 
+\begin_inset Formula $Q$
+\end_inset
+
+.
+ If the sink is made absorbing (letting 
+\begin_inset Formula $p_{n,n}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{n,1}=0$
+\end_inset
+
+), then one can compute the number of occurrences of a state prior to absorption
+ at the sink.
+ Let 
+\begin_inset Formula $T$
+\end_inset
+
+ denote the set of transient (non-absorbing) states, which will be every
+ state other than the sink.
+ Let 
+\begin_inset Formula $n_{i,j}$
+\end_inset
+
+ denote the number of occurrences of state 
+\begin_inset Formula $j$
+\end_inset
+
+ prior to absorption, given that one starts in state 
+\begin_inset Formula $i$
+\end_inset
+
+ (if 
+\begin_inset Formula $i=j$
+\end_inset
+
+ then we count the initial occurence, too).
+ Using the method of 
+\begin_inset Quotes eld
+\end_inset
+
+first passage,
+\begin_inset Quotes erd
+\end_inset
+
+ one obtains the following relation.
+\begin_inset Formula 
+\begin{equation}
+\E{n_{i,j}}=\delta_{i,j}+\sum_{k\in T}p_{i,j}\E{n_{k,j}}\label{eq:E[n(i,j)]}
+\end{equation}
+
+\end_inset
+
+Let 
+\begin_inset Formula $N=\left[\E{n_{i,j}}\right]$
+\end_inset
+
+ be the matrix of these expectations.
+ Then eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E[n(i,j)]"
+
+\end_inset
+
+ can be re-written in matrix form as follows.
+\begin_inset Formula 
+\begin{align}
+N & =I+QN\nonumber \\
+N-QN & =I\nonumber \\
+(I-Q)N & =I\nonumber \\
+N & =(I-Q)^{-1}\label{eq:N}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The matrix 
+\begin_inset Formula $N$
+\end_inset
+
+ defined by eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:N"
+
+\end_inset
+
+ is called the 
+\emph on
+fundamental matrix
+\emph default
+ for absorbing chains.
+ Many Markov chain results can be obtained from this fundamental matrix.
+ The expected number of occurences of each state exists and is finite; we
+ can conclude that the inverse in eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:N"
+
+\end_inset
+
+ exists.
+\end_layout
+
+\begin_layout Standard
+What about the variance associated with this expectation? We need to find
+ the second moment 
+\begin_inset Formula $\E{n_{i,j}^{2}}$
+\end_inset
+
+.
+ We can do this using the same method as we did for 
+\begin_inset Formula $\E{n_{i,j}}$
+\end_inset
+
+, above.
+ If we start in state 
+\begin_inset Formula $i$
+\end_inset
+
+ then we may move to an absorbing state 
+\begin_inset Formula $k$
+\end_inset
+
+ (in the specific case of our models, only the sink 
+\begin_inset Formula $n$
+\end_inset
+
+) with probability 
+\begin_inset Formula $p_{i,k}$
+\end_inset
+
+ and gain contribution 
+\begin_inset Formula $\delta_{i,j}$
+\end_inset
+
+.
+ Otherwise we move to a transient state 
+\begin_inset Formula $k$
+\end_inset
+
+ and gain contribution 
+\begin_inset Formula $\delta_{i,j}$
+\end_inset
+
+ from the initial position and then 
+\begin_inset Formula $n_{i,k}$
+\end_inset
+
+ from the later steps.
+ This gives the following equation where, we note, 
+\begin_inset Formula $\delta_{i,j}^{2}=\delta_{i,j}$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{align}
+\E{n_{i,j}^{2}} & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{(\delta_{i,j}+n_{k,j})^{2}}\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{\delta_{i,j}^{2}+2\delta_{i,j}n_{k,j}+n_{k,j}^{2}}\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{\delta_{i,j}^{2}}+\E{2\delta_{i,j}n_{k,j}}+\E{n_{k,j}^{2}}\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\left(\delta_{i,j}+2\delta_{i,j}\E{n_{k,j}}+\E{n_{k,j}^{2}}\right)\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}2\delta_{i,j}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\nonumber \\
+ & =\delta_{i,j}\sum_{k}p_{i,k}+2\delta_{i,j}\sum_{k\in T}p_{i,k}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\nonumber \\
+ & =1+2\sum_{k\in T}p_{j,k}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\label{eq:E[n2(i,j)]}
+\end{align}
+
+\end_inset
+
+Let 
+\begin_inset Formula $N_{2}=\left[\E{n_{i,j}^{2}}\right]$
+\end_inset
+
+ be the matrix of these expectations.
+ Then eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E[n2(i,j)]"
+
+\end_inset
+
+ can be re-written in matrix form as follows.
+\begin_inset Formula 
+\begin{align}
+N_{2} & =I+2(QN)_{d}+QN_{2}\nonumber \\
+N_{2}-QN_{2} & =I+2(QN)_{d}\nonumber \\
+N_{2}(I-Q) & =I+2(QN)_{d}\nonumber \\
+N_{2} & =(I-Q)^{-1}(I+2(QN)_{d})\nonumber \\
+N_{2} & =N(I+2(QN)_{d})\nonumber \\
+N_{2} & =N+2N(QN)_{d}\label{eq:N2-1}
+\end{align}
+
+\end_inset
+
+Since we already know 
+\begin_inset Formula $N=I+QN$
+\end_inset
+
+, we can conclude that 
+\begin_inset Formula $QN=N-I$
+\end_inset
+
+.
+ We substitute in eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:N2-1"
+
+\end_inset
+
+ and obtain the following.
+\begin_inset Formula 
+\begin{align}
+N_{2} & =N+2N(N-I)_{d}\nonumber \\
+ & =N+2NN_{d}-2N\nonumber \\
+ & =2NN_{d}-N\nonumber \\
+ & =N(2N_{d}-I)\label{eq:N2}
+\end{align}
+
+\end_inset
+
+Now, with eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:N2"
+
+\end_inset
+
+ in hand, we can compute the matrix of variances as 
+\begin_inset Formula $ $
 \end_inset
 
 
