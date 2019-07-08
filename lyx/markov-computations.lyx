@@ -81,14 +81,33 @@ Markov Computations
 \end_layout
 
 \begin_layout Standard
-Many of the computations in this chapter are taken directly from 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lettrine[lraise=0.1]{M}{any}
+\end_layout
+
+\end_inset
+
+ of the results and derivations in this chapter are taken directly from
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kemmeny1976finite"
 
 \end_inset
 
-.
+, though the derivations presented here are likely much more detailed.
+ The former reference focuses on Markov chains more generally, and is the
+ appropriate source to consult for general questions.
+\end_layout
+
+\begin_layout Section
+Representing models
 \end_layout
 
 \begin_layout Standard
@@ -123,7 +142,7 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename ../../../Desktop/Publications/Computations/example.eps
+	filename figures/example.eps
 	scale 75
 
 \end_inset
@@ -175,7 +194,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout LyX-Code
 model example
@@ -237,7 +256,7 @@ end
 A short primer on TML is included as Appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "chap:A-TML-Primer"
+reference "chap:A-Brief-TML"
 
 \end_inset
 
@@ -269,7 +288,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout LyX-Code
 ($assume(1) normalize(1)$)
@@ -447,7 +466,35 @@ recurrent
 \end_inset
 
 .
- For many computations it will be sueful to have a reduced matrix 
+ We can represent the transition matrix in R as follows.
+\end_layout
+
+\begin_layout LyX-Code
+P <- matrix(c(
+\end_layout
+
+\begin_layout LyX-Code
+  0,   0,   0,   0,   1,
+\end_layout
+
+\begin_layout LyX-Code
+  1,   0,   0, 1/4,   0,
+\end_layout
+
+\begin_layout LyX-Code
+  0, 1/2, 1/2,   0,   0,
+\end_layout
+
+\begin_layout LyX-Code
+  0, 1/2, 1/4,   0,   0,
+\end_layout
+
+\begin_layout LyX-Code
+  0,   0, 1/4, 3/4,   0), nrow=5)
+\end_layout
+
+\begin_layout Standard
+For many computations it will be sueful to have a reduced matrix 
 \begin_inset Formula $Q=[q_{i,j}]$
 \end_inset
 
@@ -474,6 +521,23 @@ Both
 \end_inset
 
  are always square matrices.
+ We can extract the 
+\begin_inset Formula $Q$
+\end_inset
+
+ matrix from the 
+\begin_inset Formula $P$
+\end_inset
+
+ matrix in R as follows.
+\end_layout
+
+\begin_layout LyX-Code
+n <- nrow(P)
+\end_layout
+
+\begin_layout LyX-Code
+Q <- P[-n,-n]
 \end_layout
 
 \begin_layout Standard
@@ -518,6 +582,45 @@ S=\left[\begin{array}{ccccc}
 The usage models used here are deterministic; a stimulus can only label
  one outgoing transition from a state, so there is no need to sum transition
  probabilities in the stimulus matrix.
+ We can represent the stimulus matrix in R as follows.
+\end_layout
+
+\begin_layout LyX-Code
+S <- matrix(c(
+\end_layout
+
+\begin_layout LyX-Code
+  1,   0,   0, 1/4,
+\end_layout
+
+\begin_layout LyX-Code
+  0, 1/2, 1/2,   0,
+\end_layout
+
+\begin_layout LyX-Code
+  0, 1/2, 1/4,   0,
+\end_layout
+
+\begin_layout LyX-Code
+  0,   0, 1/4, 1/2,
+\end_layout
+
+\begin_layout LyX-Code
+  0,   0,   0, 1/4), nrow=4)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -648,12 +751,12 @@ key "horn1985matrix"
 \end_layout
 
 \begin_layout Section
-Number of occurrences of a state in a test case
+Computing the number of occurrences of a state in a test case
 \end_layout
 
 \begin_layout Standard
-The number of occurrences of a state in a test case can be computed using
- the reduced matrix 
+The number of occurrences of a state in a random walk from source to sink
+ (a test case) can be computed using the reduced matrix 
 \begin_inset Formula $Q$
 \end_inset
 
@@ -678,7 +781,7 @@ The number of occurrences of a state in a test case can be computed using
 \begin_inset Formula $n_{i,j}$
 \end_inset
 
- denote the number of occurrences of state 
+ be a random variable counting the number of occurrences of state 
 \begin_inset Formula $j$
 \end_inset
 
@@ -690,16 +793,31 @@ The number of occurrences of a state in a test case can be computed using
 \begin_inset Formula $i=j$
 \end_inset
 
- then we count the initial occurence, too).
- Using the method of 
-\begin_inset Quotes eld
+ then we count the initial occurence, too, and use 
+\begin_inset Formula $\delta_{i,j}$
 \end_inset
 
-first passage,
-\begin_inset Quotes erd
+ to do that).
+ From 
+\begin_inset Formula $i$
 \end_inset
 
- one obtains the following relation.
+ we may move to transient state 
+\begin_inset Formula $k$
+\end_inset
+
+, in which case we expect 
+\begin_inset Formula $\E{n_{k,j}}$
+\end_inset
+
+ more occurrence of state 
+\begin_inset Formula $j$
+\end_inset
+
+ prior to absorption.
+ Since these different possibilities are disjoint, we can simply sum them
+ up.
+ 
 \begin_inset Formula 
 \begin{equation}
 \E{n_{i,j}}=\delta_{i,j}+\sum_{k\in T}p_{i,j}\E{n_{k,j}}\label{eq:E[n(i,j)]}
@@ -780,8 +898,7 @@ What about the variance associated with this expectation? We need to find
 \begin_inset Formula $\E{n_{i,j}^{2}}$
 \end_inset
 
-.
- We can do this using the same method as we did for 
+, and we can do this using the same method as we did for 
 \begin_inset Formula $\E{n_{i,j}}$
 \end_inset
 
@@ -827,9 +944,9 @@ What about the variance associated with this expectation? We need to find
 .
 \begin_inset Formula 
 \begin{align}
-\E{n_{i,j}^{2}} & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{(\delta_{i,j}+n_{k,j})^{2}}\nonumber \\
- & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{\delta_{i,j}^{2}+2\delta_{i,j}n_{k,j}+n_{k,j}^{2}}\nonumber \\
- & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{\delta_{i,j}^{2}}+\E{2\delta_{i,j}n_{k,j}}+\E{n_{k,j}^{2}}\nonumber \\
+\E{n_{i,j}^{2}} & =\sum_{k\notin T}p_{i,k}\delta_{i,j}^{2}+\sum_{k\in T}p_{i,k}\E{(\delta_{i,j}+n_{k,j})^{2}}\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}^{2}+\sum_{k\in T}p_{i,k}\E{\delta_{i,j}^{2}+2\delta_{i,j}n_{k,j}+n_{k,j}^{2}}\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}^{2}+\sum_{k\in T}p_{i,k}\E{\delta_{i,j}^{2}}+\E{2\delta_{i,j}n_{k,j}}+\E{n_{k,j}^{2}}\nonumber \\
  & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\left(\delta_{i,j}+2\delta_{i,j}\E{n_{k,j}}+\E{n_{k,j}^{2}}\right)\nonumber \\
  & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}2\delta_{i,j}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\nonumber \\
  & =\delta_{i,j}\sum_{k}p_{i,k}+2\delta_{i,j}\sum_{k\in T}p_{i,k}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\nonumber \\
@@ -910,7 +1027,2189 @@ reference "eq:N2"
 \end_inset
 
  in hand, we can compute the matrix of variances as 
-\begin_inset Formula $ $
+\begin_inset Formula $\left[\Var{n_{i,j}}\right]=N_{2}-N\circ N$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+These results allow the computation of the expected number of occurrences
+ for each state and the associated variance by the R function in algorithm
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:N"
+
+\end_inset
+
+.
+ Note that for a usage model one is primarily concerned with only the first
+ row of the returned matrices, since one is concerned with the behavior
+ when the model is started from the source.
+ The results obtained for the example model are presented in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:N"
+
+\end_inset
+
+.
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:N"
+
+\end_inset
+
+Compute the expected number of occurrences of each state
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+# Compute the non-terminal expectation and
+\end_layout
+
+\begin_layout LyX-Code
+# variance matrices for the stochastic matrix
+\end_layout
+
+\begin_layout LyX-Code
+# P.
+\end_layout
+
+\begin_layout LyX-Code
+#
+\end_layout
+
+\begin_layout LyX-Code
+# P: a row-stochastic matrix
+\end_layout
+
+\begin_layout LyX-Code
+# return: list(N,V) where
+\end_layout
+
+\begin_layout LyX-Code
+#   N: the expected occurrence of each state
+\end_layout
+
+\begin_layout LyX-Code
+#   V: the associated variances
+\end_layout
+
+\begin_layout LyX-Code
+get_nte <- function(P) {
+\end_layout
+
+\begin_layout LyX-Code
+   n <- nrow(P)
+\end_layout
+
+\begin_layout LyX-Code
+   Q <- P[-n, -n]
+\end_layout
+
+\begin_layout LyX-Code
+   N <- solve(diag(n - 1) - Q)
+\end_layout
+
+\begin_layout LyX-Code
+   V <- N %*% (2 * diag(diag(N)) - diag(n - 1)) - N * N
+\end_layout
+
+\begin_layout LyX-Code
+   list(N, V)
+\end_layout
+
+\begin_layout LyX-Code
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:N"
+
+\end_inset
+
+Expected occurrence and associated variance for each state
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+State
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Occurrence
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variance
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(visits per test case)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Enter]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[A]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.231
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.284 0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.231
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.556
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[C]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.923 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.497 0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Exit]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $l$
+\end_inset
+
+ denote the number of state transitions from the source to the sink in a
+ test case.
+ The expected length 
+\begin_inset Formula $\E l$
+\end_inset
+
+ of a test case generated from a Markov chain usage model can be quickly
+ computed once 
+\begin_inset Formula $N$
+\end_inset
+
+ is known:
+\begin_inset Formula 
+\[
+\E l=\E{\sum_{i=1}^{n-1}n_{i,j}}=\sum_{i-1}^{n-1}\E{n_{i,j}}
+\]
+
+\end_inset
+
+That is, the average length of a test case is the number of state transitions
+ from the source to the sink.
+ Note that 
+\begin_inset Formula $\E l$
+\end_inset
+
+ does not include the sink; the total average number of 
+\emph on
+state visits
+\emph default
+ (including the sink) is one more, since the sink is always visited exactly
+ once.
+ In a later section we will revisit this and also discuss how to obtain
+ an associated variance.
+\end_layout
+
+\begin_layout Section
+Computing the long-run state probabilities
+\end_layout
+
+\begin_layout Standard
+Assume that many test case (random walks from source to sink) are generated
+ from a usage model.
+ For each state one can sum the number of occurrences of the state, and
+ then divide by this by the total number of occurrences of all states.
+ As the number of test cases becomes very large, this ratio will approach
+ a fixed value called the 
+\emph on
+long-run occupancy
+\emph default
+ or 
+\emph on
+long-run probability
+\emph default
+ of the state.
+ Since the usage model is always in one of the states, the sum of all long-run
+ occupancies is one.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\Pi=[\pi_{1},\pi_{2},\ldots,\pi_{n}]$
+\end_inset
+
+ be the vector of long-run probabilities for the 
+\begin_inset Formula $n$
+\end_inset
+
+ states.
+ This vector can be found for a given transition matrix 
+\begin_inset Formula $P$
+\end_inset
+
+ is the unique stochastic vector solution to the left-eigenvector equation
+ for eigenvalue 1.
+\begin_inset Formula 
+\begin{equation}
+\Pi=\Pi P\label{eq:Perron}
+\end{equation}
+
+\end_inset
+
+The left-eigenvector 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is sometimes called the 
+\emph on
+Perron
+\emph default
+ eigenvector.
+ Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Perron"
+
+\end_inset
+
+ is equivalent to the following system of equations.
+\begin_inset Formula 
+\begin{align*}
+\pi_{1} & =\pi_{1}p_{1,1}+\pi_{2}p_{2,1}+\cdots+\pi_{n}p_{n,1}\\
+\pi_{2} & =\pi_{1}p_{1,2}+\pi_{2}p_{2,2}+\cdots+\pi_{n}p_{n,2}\\
+ & \vdots\\
+\pi_{n} & =\pi_{1}p_{1,n}+\pi_{2}p_{2,n}+\cdots+\pi_{n}p_{n,n}\\
+1 & =\pi_{1}+\pi_{2}+\cdots+\pi_{n}
+\end{align*}
+
+\end_inset
+
+Note that there are 
+\begin_inset Formula $n$
+\end_inset
+
+ unknowns and 
+\begin_inset Formula $n+1$
+\end_inset
+
+ equations.
+ Incidentally, each row of 
+\begin_inset Formula $P^{\infty}=\lim_{n\rightarrow\infty}P^{n}$
+\end_inset
+
+ is equal to the vector 
+\begin_inset Formula $\Pi$
+\end_inset
+
+, unless 
+\begin_inset Formula $P$
+\end_inset
+
+ is periodic 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kemmeny1976finite"
+
+\end_inset
+
+.
+ There are many ways to solve this system.
+ For a simple solution by hand, back-substitution will work just fine using
+ the above equations.
+\end_layout
+
+\begin_layout Standard
+The fundamental matrix 
+\begin_inset Formula $N$
+\end_inset
+
+ can also be used to obtain 
+\begin_inset Formula $\Pi$
+\end_inset
+
+.
+ The average number of state visits in a test case is 
+\begin_inset Formula $\E l+1$
+\end_inset
+
+.
+ The fraction of time one spends in state 
+\begin_inset Formula $i$
+\end_inset
+
+ in the long run is 
+\begin_inset Formula $\pi_{i}$
+\end_inset
+
+, so the average number of times state 
+\begin_inset Formula $i$
+\end_inset
+
+ will be visited in a single test case is 
+\begin_inset Formula $\pi_{i}(\E l+1)$
+\end_inset
+
+.
+ We conclude the following.
+\begin_inset Formula 
+\begin{equation}
+\pi_{i}=\frac{\E{n_{i,j}}}{\E l+1}\label{eq:pi}
+\end{equation}
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\E{n_{1,n}}$
+\end_inset
+
+ is not computed by equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:N"
+
+\end_inset
+
+, but we can conclude that 
+\begin_inset Formula $\E{n_{1,n}}=1$
+\end_inset
+
+ since the sink is always visited exactly once per test case.
+ Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Compute-the-Perron"
+
+\end_inset
+
+ uses this relationship to compute 
+\begin_inset Formula $\Pi$
+\end_inset
+
+.
+ The results for the example model are presented in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:pi"
+
+\end_inset
+
+.
+ The algorithm does not give a value for 
+\family typewriter
+[Exit]
+\family default
+, but that can be obtained by subtracting the sum of the other values from
+ one.
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Compute-the-Perron"
+
+\end_inset
+
+Compute the Perron eigenvector (long-run probabilities)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+# Compute the Perron eigenvector for the
+\end_layout
+
+\begin_layout LyX-Code
+# stochastic matrix P and return it.
+ The
+\end_layout
+
+\begin_layout LyX-Code
+# computation is performed by computation
+\end_layout
+
+\begin_layout LyX-Code
+# of the fundamental matrix.
+\end_layout
+
+\begin_layout LyX-Code
+#
+\end_layout
+
+\begin_layout LyX-Code
+# P: a square row-stochastic matrix
+\end_layout
+
+\begin_layout LyX-Code
+# N: the fundamental matrix, if available
+\end_layout
+
+\begin_layout LyX-Code
+# return: the Perron eigenvector
+\end_layout
+
+\begin_layout LyX-Code
+get_pi <- function(P, N) {
+\end_layout
+
+\begin_layout LyX-Code
+   n <- nrow(P)
+\end_layout
+
+\begin_layout LyX-Code
+   if (nargs() < 2) {
+\end_layout
+
+\begin_layout LyX-Code
+      N <- get_nte(P)[[1]]
+\end_layout
+
+\begin_layout LyX-Code
+   }
+\end_layout
+
+\begin_layout LyX-Code
+   len <- 1 + sum(N[1, ])
+\end_layout
+
+\begin_layout LyX-Code
+   pi <- N[1, ]/len
+\end_layout
+
+\begin_layout LyX-Code
+   append(pi, c(1 - sum(pi)))
+\end_layout
+
+\begin_layout LyX-Code
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:pi"
+
+\end_inset
+
+Long-run occupancies
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+State
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Long-run Occupancy
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Enter]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.185 7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[A]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.228 6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.228 6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[C]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.171 4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Exit]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.195 7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An alternate method for obtaining the long run distribution is to use an
+ iterative method called the 
+\emph on
+power method
+\emph default
+.
+ Given a guess at the long-run distribution 
+\begin_inset Formula $\Pi_{i}$
+\end_inset
+
+, one computes a slightly better guess by 
+\begin_inset Formula $\Pi_{i+1}=\Pi_{i}P$
+\end_inset
+
+.
+ This method is guaranteed to converge to the Perron eigenvector if the
+ matrix is 
+\emph on
+primitive
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "p. 516"
+key "horn1985matrix"
+
+\end_inset
+
+.
+ Without going into too much detail, if there is a non-zero entry on the
+ diagonal, the matrix is primitive (though the converse is not true).
+ Thus if 
+\begin_inset Formula $p_{i,i}\neq0$
+\end_inset
+
+ for any 
+\begin_inset Formula $i$
+\end_inset
+
+, then the power method will converge to the Perron eigenvector.
+\end_layout
+
+\begin_layout Standard
+One way to guarantee primitivity is to introduce a 
+\begin_inset Quotes eld
+\end_inset
+
+dummy
+\begin_inset Quotes erd
+\end_inset
+
+ state 
+\begin_inset Formula $d$
+\end_inset
+
+ with a self-loop to ensure primitivity (that is, 
+\begin_inset Formula $p_{d,d}>0$
+\end_inset
+
+), apply the power method, then 
+\begin_inset Quotes eld
+\end_inset
+
+remove
+\begin_inset Quotes erd
+\end_inset
+
+ the dummy state and correct for its presence.
+ This can be done by adding the dummy state on the recurrence loop from
+ the sink to the source, so 
+\begin_inset Formula $p_{n,d}=1$
+\end_inset
+
+, 
+\begin_inset Formula $p_{d,d}=1/2$
+\end_inset
+
+, and 
+\begin_inset Formula $p_{d,1}=1/2$
+\end_inset
+
+.
+ Flow always passes straight through the dummy state, so any of the probability
+ mass absorbed by the dummy state can be evenly redistributed among the
+ other states.
+ This change can be made to the example model's transition matrix 
+\begin_inset Formula $P$
+\end_inset
+
+ as follows.
+\begin_inset Formula 
+\[
+P=\left[\begin{array}{cccccc}
+0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & \frac{1}{2} & \frac{1}{2} & 0 & 0\\
+0 & 0 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & 0\\
+0 & \frac{1}{4} & 0 & 0 & \frac{3}{4} & 0\\
+0 & 0 & 0 & 0 & 0 & 1\\
+\frac{1}{2} & 0 & 0 & 0 & 0 & \frac{1}{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+(Note that the matrix was primitive 
+\emph on
+before
+\emph default
+ this change, since 
+\begin_inset Formula $p_{3,3}\neq0$
+\end_inset
+
+.) This change guarantees primitivity by making 
+\begin_inset Formula $p_{d,d}\neq0$
+\end_inset
+
+.
+ The power method is then applied to yield the long-run probabilities 
+\begin_inset Formula $\Pi$
+\end_inset
+
+.
+ The entry for the dummy state is dropped from 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ and the vector is re-normalized to obtain the correct long-run probabilities.
+ This is actually easier than it sounds; algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:power-method"
+
+\end_inset
+
+ implements this approach.
+ For the example model convergence to within 
+\begin_inset Formula $1\times10^{-6}$
+\end_inset
+
+ takes 46 iterations starting from the default guess.
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:power-method"
+
+\end_inset
+
+Compute the approximation to the Perron eigenvector via the power method
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+# Compute the Perron eigenvector for the row
+\end_layout
+
+\begin_layout LyX-Code
+# stochastic matrix P and return it.
+  The
+\end_layout
+
+\begin_layout LyX-Code
+# computation is performed using the power
+\end_layout
+
+\begin_layout LyX-Code
+# method.
+\end_layout
+
+\begin_layout LyX-Code
+#
+\end_layout
+
+\begin_layout LyX-Code
+# P: a row-stochastic matrix
+\end_layout
+
+\begin_layout LyX-Code
+# g: (optional) an initial guess
+\end_layout
+
+\begin_layout LyX-Code
+# return: list(y,step) where
+\end_layout
+
+\begin_layout LyX-Code
+#   y: an approximation of the Perron eigenvector
+\end_layout
+
+\begin_layout LyX-Code
+#   step: the number of iterations required
+\end_layout
+
+\begin_layout LyX-Code
+get_pi_approx <- function(P, g) {
+\end_layout
+
+\begin_layout LyX-Code
+   n <- nrow(P)
+\end_layout
+
+\begin_layout LyX-Code
+   d <- n + 1
+\end_layout
+
+\begin_layout LyX-Code
+   P <- rbind(cbind(P, 0), 0)
+\end_layout
+
+\begin_layout LyX-Code
+   P[n, d] = 1
+\end_layout
+
+\begin_layout LyX-Code
+   P[d, d] = 1/2
+\end_layout
+
+\begin_layout LyX-Code
+   P[d, 1] = 1/2
+\end_layout
+
+\begin_layout LyX-Code
+   P[n, 1] = 0
+\end_layout
+
+\begin_layout LyX-Code
+   if (missing(g)) {
+\end_layout
+
+\begin_layout LyX-Code
+      yold <- rep(1/d, d)
+\end_layout
+
+\begin_layout LyX-Code
+   } else {
+\end_layout
+
+\begin_layout LyX-Code
+      g <- c(g, g[n] * 2)
+\end_layout
+
+\begin_layout LyX-Code
+      yold <- g/sum(g)
+\end_layout
+
+\begin_layout LyX-Code
+   }
+\end_layout
+
+\begin_layout LyX-Code
+   y <- yold %*% P
+\end_layout
+
+\begin_layout LyX-Code
+   step <- 1
+\end_layout
+
+\begin_layout LyX-Code
+   limit <- 1e-06
+\end_layout
+
+\begin_layout LyX-Code
+   while (sum(abs(yold - y)) > limit) {
+\end_layout
+
+\begin_layout LyX-Code
+      step = step + 1
+\end_layout
+
+\begin_layout LyX-Code
+      yold = y
+\end_layout
+
+\begin_layout LyX-Code
+      y = y %*% P
+\end_layout
+
+\begin_layout LyX-Code
+   }
+\end_layout
+
+\begin_layout LyX-Code
+   y = y[1:5]
+\end_layout
+
+\begin_layout LyX-Code
+   y = y/sum(y)
+\end_layout
+
+\begin_layout LyX-Code
+   list(y, step)
+\end_layout
+
+\begin_layout LyX-Code
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Performing sensitivity analysis
+\end_layout
+
+\begin_layout Standard
+A change in a transition probability impacts the occupancies of all states
+ since the model is ergodic.
+ Consider the example model and the exit arcs from state 
+\family typewriter
+[C]
+\family default
+.
+ If one changes the probabilities of 
+\family typewriter
+"e"
+\family default
+ or 
+\family typewriter
+"f"
+\family default
+ to 0.9, this has a significant effect on the model.
+ Alternately, changing the probability of 
+\family typewriter
+"a"
+\family default
+ to 0.9 has a very different effect.
+ Suppose we are attempting to validate a model against our expectations
+ for what a 
+\begin_inset Quotes eld
+\end_inset
+
+use
+\begin_inset Quotes erd
+\end_inset
+
+ should look like.
+ We discover that the model is spending far too much time in one state versus
+ another.
+ One way to determine how to adjust model probabilities to correct this
+ is to use sensitivity analysis.
+\end_layout
+
+\begin_layout Standard
+For each pair of state 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+ in the model such that 
+\begin_inset Formula $0<p_{i,j}<1$
+\end_inset
+
+, we can set 
+\begin_inset Formula $p_{i,j}$
+\end_inset
+
+ to some value 
+\begin_inset Formula $0<q<1$
+\end_inset
+
+ (adjusting the other probabilities, of course) and compute the long-run
+ occupancies.
+ We will use the following notation for this new vector.
+\begin_inset Formula 
+\[
+\Pi^{(p_{i,j}=q)}=\left[\pi_{k}^{(p_{i,j}=q)}\right]
+\]
+
+\end_inset
+
+The 
+\emph on
+sensitivity
+\emph default
+ of state 
+\begin_inset Formula $k$
+\end_inset
+
+ with respect to the transition from state 
+\begin_inset Formula $i$
+\end_inset
+
+ to state 
+\begin_inset Formula $j$
+\end_inset
+
+ is defined as follows.
+\begin_inset Formula 
+\[
+z_{i,j,k}=\frac{\pi_{k}^{(p_{i,j}=0.95)}-\pi_{k}^{(p_{i,j}=0.05)}}{0.90}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The matrix of sensitivities is computed by algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:sensitivities"
+
+\end_inset
+
+.
+ The sensitivities for the example model are given in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:sensitivities"
+
+\end_inset
+
+.
+ We interpret the sensitivities as the effect that increasing the transition
+ probability has on the long-run occupancy of each state.
+ That is, we would expect that increasing the transition probability from
+ state 
+\family typewriter
+[A]
+\family default
+ to state 
+\family typewriter
+[B]
+\family default
+ will decrease the long-run occupancy of state 
+\family typewriter
+[C]
+\family default
+ and increase the long-run occupancy of state 
+\family typewriter
+[B]
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Suppose that one wishes to direct more of the model's flow to state 
+\family typewriter
+[C]
+\family default
+.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:sensitivities"
+
+\end_inset
+
+ indicates that the best way to do so is to increase the probability associated
+ with the arc from state 
+\family typewriter
+[A]
+\family default
+ to state 
+\family typewriter
+[C]
+\family default
+, as this is where we find the largest positive value in the column for
+ state 
+\family typewriter
+[C]
+\family default
+.
+ The best way to increase the length of a test case is to decrease the long-run
+ occupancy of state 
+\family typewriter
+[Exit]
+\family default
+, which can be done by increasing the probability associated with the transition
+ from state 
+\family typewriter
+[B]
+\family default
+ to state 
+\family typewriter
+[B]
+\family default
+.
+ 
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:sensitivities"
+
+\end_inset
+
+Compute the matrix of sensitivities
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+# Compute the matrix of arc sensitivities.
+\end_layout
+
+\begin_layout LyX-Code
+# The first column of the returned matrix
+\end_layout
+
+\begin_layout LyX-Code
+# is the source state, the second column is
+\end_layout
+
+\begin_layout LyX-Code
+# the target state.
+ The remaining columns
+\end_layout
+
+\begin_layout LyX-Code
+# are the changes in the occupancies.
+\end_layout
+
+\begin_layout LyX-Code
+#
+\end_layout
+
+\begin_layout LyX-Code
+# P: the state transition matrix
+\end_layout
+
+\begin_layout LyX-Code
+# pi: the (optional) long run occupancies
+\end_layout
+
+\begin_layout LyX-Code
+# return: the sensitivities matrix
+\end_layout
+
+\begin_layout LyX-Code
+get_sensitivities <- function(P, pi) {
+\end_layout
+
+\begin_layout LyX-Code
+   n <- nrow(P)
+\end_layout
+
+\begin_layout LyX-Code
+   if (missing(pi)) {
+\end_layout
+
+\begin_layout LyX-Code
+      pi <- get_pi_approx(P)
+\end_layout
+
+\begin_layout LyX-Code
+   }
+\end_layout
+
+\begin_layout LyX-Code
+   Z <- matrix(rep(c(0), (n + 2)), nrow = 1)
+\end_layout
+
+\begin_layout LyX-Code
+   m <- 1
+\end_layout
+
+\begin_layout LyX-Code
+   for (i in 1:n) {
+\end_layout
+
+\begin_layout LyX-Code
+      for (j in 1:n) {
+\end_layout
+
+\begin_layout LyX-Code
+         if (0 < P[i, j] && P[i, j] < 1) {
+\end_layout
+
+\begin_layout LyX-Code
+            t <- P[i, ]
+\end_layout
+
+\begin_layout LyX-Code
+            x <- 1 - P[i, j]
+\end_layout
+
+\begin_layout LyX-Code
+            P[i, ] = t/x * 0.05
+\end_layout
+
+\begin_layout LyX-Code
+            P[i, j] = 0.95
+\end_layout
+
+\begin_layout LyX-Code
+            ph <- get_pi_approx(P, pi)[[1]]
+\end_layout
+
+\begin_layout LyX-Code
+            P[i, ] = t/x * 0.95
+\end_layout
+
+\begin_layout LyX-Code
+            P[i, j] = 0.05
+\end_layout
+
+\begin_layout LyX-Code
+            pl <- get_pi_approx(P, pi)[[1]]
+\end_layout
+
+\begin_layout LyX-Code
+            Z = rbind(Z, 0)
+\end_layout
+
+\begin_layout LyX-Code
+            Z[m, 1:2] = c(i, j)
+\end_layout
+
+\begin_layout LyX-Code
+            Z[m, 3:(n + 2)] = (ph - pl)/0.9
+\end_layout
+
+\begin_layout LyX-Code
+            m = m + 1
+\end_layout
+
+\begin_layout LyX-Code
+            P[i, ] = t
+\end_layout
+
+\begin_layout LyX-Code
+         }
+\end_layout
+
+\begin_layout LyX-Code
+      }
+\end_layout
+
+\begin_layout LyX-Code
+   }
+\end_layout
+
+\begin_layout LyX-Code
+   Z[1:m - 1, ]
+\end_layout
+
+\begin_layout LyX-Code
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:sensitivities"
+
+\end_inset
+
+Transition sensitivities
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="7">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+From
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+To
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Enter]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[A]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[C]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Exit]
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[A]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.047 25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.094 49
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.378 0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.189 0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.047 24
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[A]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[C]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.047 25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.094 49
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.378 0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.189 0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.047 24
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.163 9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.201 7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.680 8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.151 3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.163 9
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[C]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.003 152
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.037 82
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.182 8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.138 7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.003 151
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[B]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Exit]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.080 67
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.064 54
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.161 3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.064 54
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.080 67
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[C]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[A]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.132 7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.096 50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.096 50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.072 37
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.132 7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[C]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[Exit]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.132 7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.096 50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.096 50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.072 37
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.132 7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Computing other long run statistics
+\end_layout
+
+\begin_layout Standard
+The long run occupancy of the transition from state 
+\begin_inset Formula $i$
+\end_inset
+
+ to state 
+\begin_inset Formula $j$
+\end_inset
+
+ is obtained as 
+\begin_inset Formula $\pi_{i}p_{i,j}$
+\end_inset
+
+.
+ The long run occupancy for a particular stimulus 
+\begin_inset Formula $\sigma_{k}$
+\end_inset
+
+ can likewise be obtained by summing the long run occupancies of the arcs
+ labeled with the stimulus.
+\begin_inset Formula 
+\[
+\sigma_{k}=\frac{1}{1-\pi_{n}}\sum_{i=1}^{n-1}\pi_{i}s_{i,k}
+\]
+
 \end_inset
 
 

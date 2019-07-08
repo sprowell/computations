@@ -15,6 +15,7 @@
 theorems-ams
 eqs-within-sections
 figs-within-sections
+fixme
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -92,7 +93,7 @@ Stacy J.
 \end_layout
 
 \begin_layout Chapter*
-Introduction
+Preface
 \end_layout
 
 \begin_layout Standard
@@ -103,12 +104,22 @@ status open
 
 
 \backslash
-lettrine[lraise=0.1]{I}{ntroduction}
+lettrine[lraise=0.1]{T}{his}
 \end_layout
 
 \end_inset
 
-...
+ is the second edition of this document giving the basic computations for
+ Markov chain usage models along with their derivations and a method to
+ compute each.
+ There are many motivations for revisiting this document, including providing
+ more detailed derivations, including additional results not available in
+ the prior edition, and providing the algorithms in R.
+ The previous edition provided the algorithms in Scilab, but more and more
+ the author has found that collaborators are more comfortable working with
+ R.
+ The Scilab algorithms do, of course, still work, and are given in Appendix
+ 
 \end_layout
 
 \begin_layout Standard
@@ -198,6 +209,68 @@ lettrine[lraise=0.1]{I}{ntroduction}
 
 \end_layout
 
+\begin_layout Chapter*
+Acknowledgments
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lettrine[lraise=0.1]{T}{his}
+\end_layout
+
+\end_inset
+
+ document began life as a summary of Markov computations to answer questions
+ in an email discussion with Tjin Merry.
+ The discussion of Markov chain usage modeling, of the related computations,
+ and of Markov chain-based testing contributed greatly to my understanding
+ of the subject, and I thank Tjin Merry for prompting this document, and
+ for patience with my explanations.
+\end_layout
+
+\begin_layout Standard
+Many people have contributed to this manuscript.
+ I was first introduce to the topic of Markov chain usage models by Drs.
+ Jesse Poore and James Whittaker.
+ Michael Corum provided assistance by reading and using the first version
+ of this document.
+ Special thanks are due Zizhong Chen, who carefully proofread an early draft
+ of the first version and uncovered many careless mistakes.
+ Any mistakes which remain, or which were introduced in this new draft are
+ mine alone.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
@@ -231,6 +304,20 @@ options "bibtotoc,plain"
 \begin_inset CommandInset include
 LatexCommand include
 filename "markov-appendix.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand include
+filename "markov-scilab.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand include
+filename "markov-normal.lyx"
 
 \end_inset
 

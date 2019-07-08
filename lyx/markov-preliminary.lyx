@@ -126,6 +126,116 @@ The algorithms presented in this document can be executed using R.
 https://www.r-project.org/
 \end_layout
 
+\begin_layout Standard
+A discussion of R is well outside the scope of this text, but a few matters
+ can be introduced here.
+ First, to create a matrix we specify the data as a vector in column-major
+ form, and then give R one of the two dimensions–either the number of columns
+ or the number of rows.
+\end_layout
+
+\begin_layout LyX-Code
+M <- matrix(c(0.1,0.3,0.2,0.4), nrow=2)
+\end_layout
+
+\begin_layout Standard
+Note the order of the entries! The above assigns the following matrix to
+ 
+\family typewriter
+M
+\family default
+.
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+0.1 & 0.2\\
+0.3 & 0.4
+\end{array}\right]
+\]
+
+\end_inset
+
+The diagonal matrix of size 
+\family typewriter
+n
+\family default
+ can be obtained via 
+\family typewriter
+diag(n)
+\family default
+.
+ Likewise if one has a matrix 
+\family typewriter
+M
+\family default
+, one can obtain the diagonal with 
+\family typewriter
+diag(M)
+\family default
+.
+ The Hadamard product of two matrices 
+\family typewriter
+A
+\family default
+ and 
+\family typewriter
+B
+\family default
+ is obtained via 
+\family typewriter
+A*B
+\family default
+ and the usual matrix product via 
+\family typewriter
+A%*%B
+\family default
+.
+ The inverse of a matrix 
+\family typewriter
+M
+\family default
+ can be obtained with 
+\family typewriter
+solve(M)
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+This should be enough to get the reader started.
+ Further information is available online and in the many excellent print
+ references.
+ R code presented here has been tested with R version 3.4.2, GUI 1.70, running
+ on OS X, and has been formatted with the 
+\begin_inset Quotes eld
+\end_inset
+
+format source code
+\begin_inset Quotes erd
+\end_inset
+
+ function of the R editor.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Printing significant digits and no newline:
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+cat(formatC(signif(Z[i,j],digits=4), digits=4,format="fg", flag="#"))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Notation
 \end_layout
@@ -373,6 +483,19 @@ th column of a matrix.
 \end_inset
 
  denote a matrix of ones of appropriate size.
+ The Hadamard, or componentwise, product of two matrices 
+\begin_inset Formula $A=[a_{i,j}]$
+\end_inset
+
+ and 
+\begin_inset Formula $B=[b_{i,j}]$
+\end_inset
+
+ of the same shape is denoted 
+\begin_inset Formula $A\circ B=B\circ A=[a_{i,j}b_{i,j}]$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -863,12 +986,12 @@ Consider the variance of the sum of two random variables
  This can be written as follows.
 \begin_inset Formula 
 \begin{align*}
-\Var{X+Y}={} & \E{(X+Y)^{2}}-\En2{X+Y}\\
+\Var{X+Y}={} & \E{(X+Y)^{2}}-\En 2{X+Y}\\
 ={} & \E{X^{2}+2XY+Y^{2}}-\left(\E{X+Y}\right)^{2}\\
 ={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}-\left(\E X+\E Y\right)^{2}\\
 ={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}\\
- & -(\En2X+2\E X\E Y+\En2Y)\\
-={} & \left(\E{X^{2}}-\En2X\right)+\left(\E{Y^{2}}-\En2Y\right)\\
+ & -(\En 2X+2\E X\E Y+\En 2Y)\\
+={} & \left(\E{X^{2}}-\En 2X\right)+\left(\E{Y^{2}}-\En 2Y\right)\\
  & +2\E{XY}-2\E X\E Y\\
 ={} & \Var X+\Var Y+2\left(\E{XY}-\E X\E Y\right)\\
 ={} & \Var X+\Var Y+2\Cov XY
