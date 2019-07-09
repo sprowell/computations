@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -26,6 +26,8 @@ figs-within-sections
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -55,6 +57,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -63,7 +66,10 @@ figs-within-sections
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -98,6 +104,7 @@ lettrine[lraise=0.1]{M}{any}
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kemmeny1976finite"
+literal "true"
 
 \end_inset
 
@@ -130,6 +137,7 @@ reference "fig:Example-model"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "prowell2000tml"
+literal "true"
 
 \end_inset
 
@@ -466,7 +474,8 @@ recurrent
 \end_inset
 
 .
- We can represent the transition matrix in R as follows.
+ We can represent the transition matrix in R as follows, remembering that
+ we need to use column-major form.
 \end_layout
 
 \begin_layout LyX-Code
@@ -494,7 +503,7 @@ P <- matrix(c(
 \end_layout
 
 \begin_layout Standard
-For many computations it will be sueful to have a reduced matrix 
+For many computations it will be useful to have a reduced matrix 
 \begin_inset Formula $Q=[q_{i,j}]$
 \end_inset
 
@@ -716,7 +725,7 @@ For every state
 \begin_inset Formula $i$
 \end_inset
 
- in a proper model, there is a non-zero probability path from the source
+ in a connected model, there is a non-zero probability path from the source
  to 
 \begin_inset Formula $i$
 \end_inset
@@ -744,10 +753,12 @@ For every state
 \begin_inset CommandInset citation
 LatexCommand cite
 key "horn1985matrix"
+literal "true"
 
 \end_inset
 
 ).
+ All models will be assumed to be connected in this manner.
 \end_layout
 
 \begin_layout Section
@@ -802,26 +813,70 @@ The number of occurrences of a state in a random walk from source to sink
 \begin_inset Formula $i$
 \end_inset
 
- we may move to transient state 
+ we may move to absorbing state 
 \begin_inset Formula $k$
 \end_inset
 
-, in which case we expect 
-\begin_inset Formula $\E{n_{k,j}}$
+ (in our models, the sink 
+\begin_inset Formula $n$
 \end_inset
 
- more occurrence of state 
-\begin_inset Formula $j$
+) with probability 
+\begin_inset Formula $p_{i,k}$
 \end_inset
 
- prior to absorption.
+ and gain contribution 
+\begin_inset Formula $\delta_{i,j}$
+\end_inset
+
+.
+ Otherwise we move to a transient state 
+\begin_inset Formula $k$
+\end_inset
+
+ and gain contribution 
+\begin_inset Formula $\delta_{i,j}$
+\end_inset
+
+ from the initial state plus 
+\begin_inset Formula $n_{k,j}$
+\end_inset
+
+ from the later steps of the realization.
  Since these different possibilities are disjoint, we can simply sum them
  up.
- 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This derivation may seem excessive, but we include this detail to provide
+ a pattern for future derivations which may be less obvious.
+ We will skip the initial steps, which are 
+\begin_inset Quotes eld
+\end_inset
+
+obvious,
+\begin_inset Quotes erd
+\end_inset
+
+ in future derivations.
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
-\begin{equation}
-\E{n_{i,j}}=\delta_{i,j}+\sum_{k\in T}p_{i,j}\E{n_{k,j}}\label{eq:E[n(i,j)]}
-\end{equation}
+\begin{align}
+\E{n_{i,j}} & =\E{\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}(\delta_{i,j}+n_{k,j})}\nonumber \\
+ & =\E{\sum_{k\notin T}p_{i,k}\delta_{i,j}}+\E{\sum_{k\in T}p_{i,k}(\delta_{i,j}+n_{k,j})}\nonumber \\
+ & =\sum_{k\notin T}\E{p_{i,k}\delta_{i,k}}+\sum_{k\in T}\E{p_{i,k}(\delta_{i,j}+n_{k,j})}\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{\delta_{i,j}+n_{k,j}}\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\left(\delta_{i,j}+\E{n_{k,j}}\right)\nonumber \\
+ & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{n_{k,j}}\nonumber \\
+ & =\sum_{k}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{n_{k,j}}\nonumber \\
+ & =\delta_{i,j}\sum_{k}p_{i,k}+\sum_{k\in T}p_{i,k}\E{n_{k,j}}\nonumber \\
+ & =\delta_{i,j}+\sum_{k\in T}p_{i,k}\E{n_{k,j}}\label{eq:E(n(i,j))}
+\end{align}
 
 \end_inset
 
@@ -837,7 +892,10 @@ Let
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:E[n(i,j)]"
+reference "eq:E(n(i,j))"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -877,8 +935,8 @@ fundamental matrix
 \emph default
  for absorbing chains.
  Many Markov chain results can be obtained from this fundamental matrix.
- The expected number of occurences of each state exists and is finite; we
- can conclude that the inverse in eq.
+ The expected number of occurences of each state exists and is finite (because
+ absorption is certain); we can conclude that the inverse in eq.
 \begin_inset space ~
 \end_inset
 
@@ -920,7 +978,7 @@ What about the variance associated with this expectation? We need to find
 \end_inset
 
  and gain contribution 
-\begin_inset Formula $\delta_{i,j}$
+\begin_inset Formula $\delta_{i,j}^{2}$
 \end_inset
 
 .
@@ -928,15 +986,15 @@ What about the variance associated with this expectation? We need to find
 \begin_inset Formula $k$
 \end_inset
 
- and gain contribution 
+ and gain the square of the sum of 
 \begin_inset Formula $\delta_{i,j}$
 \end_inset
 
- from the initial position and then 
-\begin_inset Formula $n_{i,k}$
+ (from the initial state) and 
+\begin_inset Formula $n_{k,j}$
 \end_inset
 
- from the later steps.
+ (from the later steps).
  This gives the following equation where, we note, 
 \begin_inset Formula $\delta_{i,j}^{2}=\delta_{i,j}$
 \end_inset
@@ -950,7 +1008,7 @@ What about the variance associated with this expectation? We need to find
  & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\left(\delta_{i,j}+2\delta_{i,j}\E{n_{k,j}}+\E{n_{k,j}^{2}}\right)\nonumber \\
  & =\sum_{k\notin T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}\delta_{i,j}+\sum_{k\in T}p_{i,k}2\delta_{i,j}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\nonumber \\
  & =\delta_{i,j}\sum_{k}p_{i,k}+2\delta_{i,j}\sum_{k\in T}p_{i,k}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\nonumber \\
- & =1+2\sum_{k\in T}p_{j,k}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\label{eq:E[n2(i,j)]}
+ & =1+2\sum_{k\in T}p_{j,k}\E{n_{k,j}}+\sum_{k\in T}p_{i,k}\E{n_{k,j}^{2}}\label{eq:E(n2(i,j))}
 \end{align}
 
 \end_inset
@@ -967,7 +1025,7 @@ Let
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:E[n2(i,j)]"
+reference "eq:E(n2(i,j))"
 
 \end_inset
 
@@ -1413,10 +1471,10 @@ Let
 \begin_inset Formula $N$
 \end_inset
 
- is known:
+ is known by just summing the expected occurrences of each state.
 \begin_inset Formula 
 \[
-\E l=\E{\sum_{i=1}^{n-1}n_{i,j}}=\sum_{i-1}^{n-1}\E{n_{i,j}}
+\E l=\E{\sum_{k}n_{1,k}}=\sum_{k}\E{n_{1,k}}
 \]
 
 \end_inset
@@ -1442,9 +1500,9 @@ Computing the long-run state probabilities
 \end_layout
 
 \begin_layout Standard
-Assume that many test case (random walks from source to sink) are generated
+Assume that many test cases (random walks from source to sink) are generated
  from a usage model.
- For each state one can sum the number of occurrences of the state, and
+ For each state one can sum the number of occurrences of that state, and
  then divide by this by the total number of occurrences of all states.
  As the number of test cases becomes very large, this ratio will approach
  a fixed value called the 
@@ -1456,7 +1514,7 @@ long-run occupancy
 long-run probability
 \emph default
  of the state.
- Since the usage model is always in one of the states, the sum of all long-run
+ Since the usage model is always in one of its states, the sum of all long-run
  occupancies is one.
 \end_layout
 
@@ -1474,7 +1532,7 @@ Let
 \begin_inset Formula $P$
 \end_inset
 
- is the unique stochastic vector solution to the left-eigenvector equation
+ as the unique stochastic vector solution to the left-eigenvector equation
  for eigenvalue 1.
 \begin_inset Formula 
 \begin{equation}
@@ -1540,6 +1598,7 @@ Note that there are
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kemmeny1976finite"
+literal "true"
 
 \end_inset
 
@@ -1583,9 +1642,10 @@ The fundamental matrix
 .
  We conclude the following.
 \begin_inset Formula 
-\begin{equation}
-\pi_{i}=\frac{\E{n_{i,j}}}{\E l+1}\label{eq:pi}
-\end{equation}
+\begin{align}
+\E{n_{1,i}} & =\pi_{i}\left(\E l+1\right)\nonumber \\
+\pi_{i} & =\frac{\E{n_{1,i}}}{\E l+1}\label{eq:pi}
+\end{align}
 
 \end_inset
 
@@ -1912,7 +1972,11 @@ An alternate method for obtaining the long run distribution is to use an
 power method
 \emph default
 .
- Given a guess at the long-run distribution 
+ Given the 
+\begin_inset Formula $i$
+\end_inset
+
+th guess at the long-run distribution 
 \begin_inset Formula $\Pi_{i}$
 \end_inset
 
@@ -1931,18 +1995,19 @@ primitive
 LatexCommand cite
 after "p. 516"
 key "horn1985matrix"
+literal "true"
 
 \end_inset
 
 .
  Without going into too much detail, if there is a non-zero entry on the
- diagonal, the matrix is primitive (though the converse is not true).
+ diagonal then the matrix is primitive (though the converse is not true).
  Thus if 
-\begin_inset Formula $p_{i,i}\neq0$
+\begin_inset Formula $p_{j,j}\neq0$
 \end_inset
 
  for any 
-\begin_inset Formula $i$
+\begin_inset Formula $j$
 \end_inset
 
 , then the power method will converge to the Perron eigenvector.
@@ -2405,7 +2470,7 @@ reference "tab:sensitivities"
 \begin_inset Float algorithm
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3206,13 +3271,39 @@ The long run occupancy of the transition from state
  can likewise be obtained by summing the long run occupancies of the arcs
  labeled with the stimulus.
 \begin_inset Formula 
-\[
-\sigma_{k}=\frac{1}{1-\pi_{n}}\sum_{i=1}^{n-1}\pi_{i}s_{i,k}
-\]
+\begin{equation}
+\sigma_{k}=\frac{1}{1-\pi_{n}}\sum_{i=1}^{n-1}\pi_{i}s_{i,k}\label{eq:sigma_k}
+\end{equation}
 
 \end_inset
 
+The factor 
+\begin_inset Formula $1/(1-\pi_{n})$
+\end_inset
 
+ in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sigma_k"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is used to remove the sink from the computation and re-normalize the vector;
+ otherwise the 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+ will not sum to one since some probability mass is absorbed by the sink
+ in 
+\begin_inset Formula $\pi_{n}$
+\end_inset
+
+ but the sink does not contribute to any stimuli.
+ Algorithm ZZZ computes the stimulus occupancies given the state long-run
+ occupancies and the stimulus matrix.
 \end_layout
 
 \end_body
