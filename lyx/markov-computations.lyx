@@ -3306,5 +3306,195 @@ noprefix "false"
  occupancies and the stimulus matrix.
 \end_layout
 
+\begin_layout Section
+Mean First Passage
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $m_{i,j}$
+\end_inset
+
+ be a random variable counting the number of state transitions until the
+ first visit to state 
+\begin_inset Formula $j$
+\end_inset
+
+, given that one starts in state 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ We have two possibilities.
+\end_layout
+
+\begin_layout Itemize
+We move directly from state 
+\begin_inset Formula $i$
+\end_inset
+
+ to state 
+\begin_inset Formula $j$
+\end_inset
+
+ in one step with probability 
+\begin_inset Formula $p_{i,j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+We move to a state 
+\begin_inset Formula $k\neq j$
+\end_inset
+
+ with probability 
+\begin_inset Formula $p_{i,k}$
+\end_inset
+
+, and then subsequently move to 
+\begin_inset Formula $j$
+\end_inset
+
+ with 
+\begin_inset Formula $m_{k,j}$
+\end_inset
+
+ steps, plus the initial step.
+\end_layout
+
+\begin_layout Standard
+These possibilities are disjoint (exactly one must happen) so we can sum
+ them up.
+ This gives us the following equation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+m_{i,j} & =p_{i,j}+\sum_{k\neq j}p_{i,k}(m_{k,j}+1)\nonumber \\
+ & =p_{i,j}+\sum_{k}p_{i,k}(m_{k,j}+1)-p_{i,j}(m_{j,j}+1)\nonumber \\
+ & =p_{i,j}+\sum_{k}p_{i,k}m_{k,j}+\sum_{k}p_{i,k}-p_{i,j}m_{j,j}-p_{i,j}\nonumber \\
+ & =\sum_{k}p_{i,k}m_{k,j}+1-p_{i,j}m_{j,j}\label{eq:mfp1}
+\end{align}
+
+\end_inset
+
+Looking at equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mfp1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ we see that 
+\begin_inset Formula $m_{j,j}$
+\end_inset
+
+ appears.
+ We can treat this as the 
+\emph on
+recurrence
+\emph default
+ time, or we can let 
+\begin_inset Formula $m_{j,j}=0$
+\end_inset
+
+ because we are already in 
+\begin_inset Formula $j$
+\end_inset
+
+.
+ The equation is simplified by the latter, so we will choose that.
+ Note that 
+\begin_inset Formula $m_{n,j}$
+\end_inset
+
+ is the same as 
+\begin_inset Formula $m_{1,j}$
+\end_inset
+
+ if we do not count the recurrence loop.
+ Since it is not labeled with a stimulus, we will not count it.
+ This allows us to reason as follows.
+\begin_inset Formula 
+\begin{align}
+m_{i,j} & =\sum_{k}p_{i,k}m_{k,j}+1\nonumber \\
+ & =\sum_{k=1}^{n-1}p_{i,k}m_{k,j}+p_{i,n}m_{n,j}+1\nonumber \\
+ & =\sum_{k=1}^{n-1}p_{i,k}m_{k,j}+p_{i,n}m_{1,j}+1\nonumber \\
+ & =\sum_{k=1}^{n-1}p_{i,k}m_{k,j}+\left(1-\sum_{k=1}^{n-1}p_{i,k}\right)m_{1,j}+1\label{eq:mfp2}
+\end{align}
+
+\end_inset
+
+Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mfp2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ depends only on 
+\begin_inset Formula $Q$
+\end_inset
+
+, which is useful.
+ Let 
+\begin_inset Formula $Z$
+\end_inset
+
+ be a marix whose first column is all ones, with all other entries zero.
+ That is, 
+\begin_inset Formula $Z=[\delta_{1,j}]$
+\end_inset
+
+.
+ To sum the rows of the 
+\begin_inset Formula $Q$
+\end_inset
+
+ matrix we multiply by 
+\begin_inset Formula $U$
+\end_inset
+
+ on the right.
+ These give the following matrix equation.
+\begin_inset Formula 
+\begin{align*}
+M & =QM+(U-QU)ZM+U\\
+M-QM & =(I-Q)UZM+U\\
+(I-Q)M & =(I-Q)UZM+U\\
+(I-Q)^{-1}(I-Q)M & =(I-Q)^{-1}(I-Q)UZM+U\\
+M & =UZM+U\\
+M-UZM & =U\\
+(I-UZ)M & =U
+\end{align*}
+
+\end_inset
+
+Consider 
+\begin_inset Formula $I-UZ$
+\end_inset
+
+.
+ This is equivalent to the following.
+\begin_inset Formula 
+\begin{align*}
+\delta_{i,j}-\sum_{k}z_{k,j} & =\delta_{i,j}-\sum_{k}\delta_{1,j}\\
+ & =\delta_{i,j}-\delta_{1,j}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document

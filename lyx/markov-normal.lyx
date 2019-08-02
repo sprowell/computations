@@ -1,0 +1,555 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsbook
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+The Normal Distribution
+\end_layout
+
+\begin_layout Standard
+Here we consider the normal, or Gaussian, distribution more closely, starting
+ with a definition of just what it means to be 
+\begin_inset Quotes eld
+\end_inset
+
+normally
+\begin_inset Quotes erd
+\end_inset
+
+ distributed.
+\end_layout
+
+\begin_layout Definition
+Consider a random variable 
+\begin_inset Formula $X$
+\end_inset
+
+, and let the frequency with which the value 
+\begin_inset Formula $x$
+\end_inset
+
+ is observed be 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+ Then the random variable 
+\begin_inset Formula $X$
+\end_inset
+
+ is 
+\emph on
+normally distributed
+\emph default
+ iff the rate at which the frequency 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ decreases is proportional to both the distance of 
+\begin_inset Formula $x$
+\end_inset
+
+ from the mean 
+\begin_inset Formula $E[X]=\mu$
+\end_inset
+
+ and the frequency 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ itself.
+ Thus 
+\begin_inset Formula $df(x)/dx\propto(x-\mu)f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let the proportionality constant be some 
+\begin_inset Formula $k\ge0$
+\end_inset
+
+.
+ Then we can write the following.
+\begin_inset Formula 
+\begin{eqnarray*}
+\frac{df(x)}{dx} & = & -k(x-\mu)f(x)\\
+df(x) & = & -k(x-\mu)f(x)dx\\
+\frac{df(x)}{f(x)} & = & -k(x-\mu)dx
+\end{eqnarray*}
+
+\end_inset
+
+We can immediately integrate
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The easy way to do this is to use the substitution 
+\begin_inset Formula $u=x-\mu$
+\end_inset
+
+, and thus 
+\begin_inset Formula $du=dx$
+\end_inset
+
+.
+ If you instead used the summation rule and ended up with 
+\begin_inset Formula $-k(x^{2}/2-\mu x)+\ln D$
+\end_inset
+
+ you might be demanding to know which answer is right.
+ These answers are the same; they only differ by the constant.
+ To see this, differentiate both with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+, or just multiply out 
+\begin_inset Formula $(x-\mu)^{2}/2$
+\end_inset
+
+.
+ One obtains 
+\begin_inset Formula $x^{2}/2-\mu x+\mu^{2}/2$
+\end_inset
+
+.
+ But 
+\begin_inset Formula $\mu^{2}/2$
+\end_inset
+
+ is itself just a constant that can be subsumed into 
+\begin_inset Formula $\ln D$
+\end_inset
+
+.
+ Alternately we can replace 
+\begin_inset Formula $\ln D$
+\end_inset
+
+ with 
+\begin_inset Formula $\mu^{2}/2+\ln C$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ both sides as follows.
+\begin_inset Formula 
+\begin{eqnarray*}
+\int\frac{1}{f(x)}df(x) & = & \int-k(x-\mu)dx\\
+\ln f(x) & = & -k\frac{(x-\mu)^{2}}{2}+\ln C
+\end{eqnarray*}
+
+\end_inset
+
+Note that we have chosen to write 
+\begin_inset Formula $\ln C$
+\end_inset
+
+ instead of 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ Now we take the exponential of both sides to eliminate the logarithm on
+ the left.
+\begin_inset Formula 
+\begin{eqnarray*}
+\exp(\ln f(x)) & = & \exp\left[-k\frac{(x-\mu)^{2}}{2}+\ln C\right]\\
+f(x) & = & Ce^{-\frac{k}{2}(x-\mu)^{2}}
+\end{eqnarray*}
+
+\end_inset
+
+At this point we have two unknown constants: 
+\begin_inset Formula $C$
+\end_inset
+
+ and 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Everything up to this point has been rather simple, but finding 
+\begin_inset Formula $k$
+\end_inset
+
+ and 
+\begin_inset Formula $C$
+\end_inset
+
+ turns out to be a bit more complicated.
+ We will need to use 
+\emph on
+substitution
+\emph default
+ and to convert to 
+\emph on
+polar coordinates
+\emph default
+.
+ Neither is really that hard.
+\end_layout
+
+\begin_layout Standard
+Note that the area under the curve must be equal to one, since some outcome
+ is certain.
+\begin_inset Formula 
+\begin{eqnarray}
+1 & = & \int_{-\infty}^{\infty}f(x)dx\nonumber \\
+ & = & \int_{-\infty}^{\infty}Ce^{-\frac{k}{2}(x-\mu)^{2}}dx\nonumber \\
+ & = & C\int_{-\infty}^{\infty}e^{-\frac{k}{2}(x-\mu)^{2}}dx\label{eq:normal-integral-1}
+\end{eqnarray}
+
+\end_inset
+
+Now we can substitute.
+ Let 
+\begin_inset Formula $u$
+\end_inset
+
+ be defined as follows.
+\begin_inset Formula 
+\begin{eqnarray*}
+u^{2} & = & \frac{k}{2}(x-\mu)^{2}\\
+u & = & \sqrt{\frac{k}{2}}(x-\mu)
+\end{eqnarray*}
+
+\end_inset
+
+We differentiate 
+\begin_inset Formula $u$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{eqnarray}
+\frac{du}{dx} & = & \frac{d}{dx}\sqrt{\frac{k}{2}}(x-\mu)\nonumber \\
+\frac{du}{dx} & = & \sqrt{\frac{k}{2}}\frac{d}{dx}(x-\mu)\nonumber \\
+\frac{du}{dx} & = & \sqrt{\frac{k}{2}}\nonumber \\
+du & = & \sqrt{\frac{k}{2}}dx\label{eq:normal-integral-substitution-1}
+\end{eqnarray}
+
+\end_inset
+
+We can thus conclude that 
+\begin_inset Formula $dx=\sqrt{\frac{2}{k}}du$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Substituting equation 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:normal-integral-substitution-1"
+
+\end_inset
+
+ into equation 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:normal-integral-1"
+
+\end_inset
+
+ we obtain the following.
+\begin_inset Formula 
+\begin{eqnarray*}
+1 & = & C\int_{-\infty}^{\infty}e^{-\frac{k}{2}(x-\mu)^{2}}dx\\
+ & = & C\int_{-\infty}^{\infty}e^{-u^{2}}\sqrt{\frac{2}{k}}du\\
+ & = & C\sqrt{\frac{2}{k}}\int_{-\infty}^{\infty}e^{-u^{2}}du
+\end{eqnarray*}
+
+\end_inset
+
+This integral is tricky.
+ While any good table of integrals should contain a solution, let's figure
+ it out.
+ We can square the integral.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The derivation looks quite straightforward, but we are actually ignoring
+ a complication that can arise when the limits of an integral are not finite.
+ In this case it does not matter.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray}
+1 & = & \left[C\sqrt{\frac{2}{k}}\int_{-\infty}^{\infty}e^{-u^{2}}du\right]^{2}\nonumber \\
+ & = & \frac{2C^{2}}{k}\left[\int_{-\infty}^{\infty}e^{-u^{2}}du\right]\left[\int_{-\infty}^{\infty}e^{-v^{2}}dv\right]\nonumber \\
+ & = & \frac{2C^{2}}{k}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\left[e^{-u^{2}}du\right]\left[e^{-v^{2}}dv\right]\nonumber \\
+ & = & \frac{2C^{2}}{k}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}e^{-(u^{2}+v^{2})}du\,dv\label{eq:normal-integral-constant-1}
+\end{eqnarray}
+
+\end_inset
+
+Note that we have to use different variables for the two integrals; otherwise
+ we might run into problems.
+ While it seems we are just making a mess, note that we have 
+\begin_inset Formula $u^{2}+v^{2}$
+\end_inset
+
+.
+ This is the equation
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+It would be more obvious if we had used 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+, but we did not want to confuse the reader, since 
+\begin_inset Formula $x$
+\end_inset
+
+ had been used previously.
+\end_layout
+
+\end_inset
+
+ for the square of the radius (
+\begin_inset Formula $r^{2}$
+\end_inset
+
+) of a circle, so let's convert to polar coordinates and see what we get.
+ Now the integral will run from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ for 
+\begin_inset Formula $\theta$
+\end_inset
+
+ (the angle) and from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $\infty$
+\end_inset
+
+ for the radius (
+\begin_inset Formula $r$
+\end_inset
+
+).
+ In this case we have 
+\begin_inset Formula $r^{2}=u^{2}+v^{2}$
+\end_inset
+
+, 
+\begin_inset Formula $u=r\cos\theta$
+\end_inset
+
+, and 
+\begin_inset Formula $v=r\sin\theta$
+\end_inset
+
+.
+ We employ a change of variable, compute the Jacobian
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+We compute the Jacobian as follows.
+\begin_inset Formula 
+\begin{eqnarray*}
+\frac{\partial(u,v)}{\partial(r,\theta)} & = & \left|\begin{array}{cc}
+\frac{\partial u}{\partial r} & \frac{\partial u}{\partial\theta}\\
+\frac{\partial v}{\partial r} & \frac{\partial v}{\partial\theta}
+\end{array}\right|\\
+ & = & \left|\begin{array}{cc}
+\cos\theta & -r\sin\theta\\
+\sin\theta & r\cos\theta
+\end{array}\right|\\
+ & = & r\cos^{2}\theta-(-r)\sin^{2}\theta\\
+ & = & r(\cos^{2}\theta+\sin^{2}\theta)\\
+ & = & r
+\end{eqnarray*}
+
+\end_inset
+
+From this we obtain the area differential 
+\begin_inset Formula $dA=|r|dr\,d\theta=r\,dr\,d\theta$
+\end_inset
+
+, since 
+\begin_inset Formula $r$
+\end_inset
+
+is non-negative.
+\end_layout
+
+\end_inset
+
+, and obtain 
+\begin_inset Formula $du\,dv=r\,dr\,d\theta$
+\end_inset
+
+.
+ Rewriting equation 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:normal-integral-constant-1"
+
+\end_inset
+
+ in polar coordinates, we obtain the following.
+\begin_inset Formula 
+\begin{eqnarray}
+1 & = & \frac{2C^{2}}{k}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}e^{-(u^{2}+v^{2})}du\,dv\nonumber \\
+ & = & \frac{2C^{2}}{k}\int_{0}^{2\pi}\int_{0}^{\infty}re^{-r^{2}}dr\,d\theta\label{eq:normal-integral-polar-1}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equation 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:normal-integral-polar-1"
+
+\end_inset
+
+ is much better.
+ Note that if we let 
+\begin_inset Formula $w=-r^{2}$
+\end_inset
+
+ then we have 
+\begin_inset Formula $dw=-2r\,dr$
+\end_inset
+
+.
+ Making this substitution we obtain the following.
+\begin_inset Formula 
+\begin{eqnarray}
+1 & = & \frac{2C^{2}}{k}\int_{0}^{2\pi}\int_{0}^{\infty}e^{-r^{2}}\left(\frac{1}{2}\right)(2r)\,dr\,d\theta\nonumber \\
+ & = & -\frac{C^{2}}{k}\int_{0}^{2\pi}\int_{0}^{-\infty}e^{w}dw\,d\theta\nonumber \\
+ & = & -\frac{C^{2}}{k}\int_{0}^{2\pi}\left[e^{w}\right]_{0}^{-\infty}d\theta\nonumber \\
+ & = & -\frac{C^{2}}{k}\int_{0}^{2\pi}(0-1)\,d\theta\nonumber \\
+ & = & -\frac{C^{2}}{k}\int_{0}^{2\pi}(-1)\,d\theta\nonumber \\
+ & = & -\frac{C^{2}}{k}\left[\theta\right]_{0}^{2\pi}\nonumber \\
+ & = & -\frac{C^{2}}{k}(2\pi-0)\nonumber \\
+ & = & -\frac{2\pi C^{2}}{k}\label{eq:normal-distribution-constants}
+\end{eqnarray}
+
+\end_inset
+
+From equation 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:normal-distribution-constants"
+
+\end_inset
+
+ we conclude that 
+\begin_inset Formula $C=\sqrt{k/(2\pi)}$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

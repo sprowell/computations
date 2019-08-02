@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -26,6 +26,8 @@ figs-within-sections
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -55,6 +57,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -63,7 +66,10 @@ figs-within-sections
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -98,6 +104,7 @@ lettrine[lraise=0.1]{T}{his}
 \begin_inset CommandInset citation
 LatexCommand cite
 key "horn1985matrix"
+literal "true"
 
 \end_inset
 
@@ -105,6 +112,7 @@ key "horn1985matrix"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pfeiffer1978concepts"
+literal "true"
 
 \end_inset
 
@@ -112,123 +120,17 @@ key "pfeiffer1978concepts"
 \end_layout
 
 \begin_layout Section
-R
+Algorithms
 \end_layout
 
 \begin_layout Standard
-The algorithms presented in this document can be executed using R.
- This is a freely-available software package which runs on many different
- platforms.
- Information about R is available online.
-\end_layout
-
-\begin_layout LyX-Code
-https://www.r-project.org/
-\end_layout
-
-\begin_layout Standard
-A discussion of R is well outside the scope of this text, but a few matters
- can be introduced here.
- First, to create a matrix we specify the data as a vector in column-major
- form, and then give R one of the two dimensions–either the number of columns
- or the number of rows.
-\end_layout
-
-\begin_layout LyX-Code
-M <- matrix(c(0.1,0.3,0.2,0.4), nrow=2)
-\end_layout
-
-\begin_layout Standard
-Note the order of the entries! The above assigns the following matrix to
- 
-\family typewriter
-M
-\family default
-.
-\begin_inset Formula 
-\[
-\left[\begin{array}{cc}
-0.1 & 0.2\\
-0.3 & 0.4
-\end{array}\right]
-\]
-
-\end_inset
-
-The diagonal matrix of size 
-\family typewriter
-n
-\family default
- can be obtained via 
-\family typewriter
-diag(n)
-\family default
-.
- Likewise if one has a matrix 
-\family typewriter
-M
-\family default
-, one can obtain the diagonal with 
-\family typewriter
-diag(M)
-\family default
-.
- The Hadamard product of two matrices 
-\family typewriter
-A
-\family default
- and 
-\family typewriter
-B
-\family default
- is obtained via 
-\family typewriter
-A*B
-\family default
- and the usual matrix product via 
-\family typewriter
-A%*%B
-\family default
-.
- The inverse of a matrix 
-\family typewriter
-M
-\family default
- can be obtained with 
-\family typewriter
-solve(M)
-\family default
-.
-\end_layout
-
-\begin_layout Standard
-This should be enough to get the reader started.
- Further information is available online and in the many excellent print
- references.
- R code presented here has been tested with R version 3.4.2, GUI 1.70, running
- on OS X, and has been formatted with the 
-\begin_inset Quotes eld
-\end_inset
-
-format source code
-\begin_inset Quotes erd
-\end_inset
-
- function of the R editor.
-\end_layout
-
-\begin_layout Standard
+Algorithms to compute all results are provided in the appendices and are
+ also available online.
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Printing significant digits and no newline:
-\end_layout
-
-\begin_layout Plain Layout
-
-\family typewriter
-cat(formatC(signif(Z[i,j],digits=4), digits=4,format="fg", flag="#"))
+Need a more complete discussion here once we realize what we plan to do.
 \end_layout
 
 \end_inset
@@ -477,13 +379,13 @@ th column of a matrix.
 \begin_inset Formula $A$
 \end_inset
 
-, with zeros for all all-diagonal entries.
+, with zeros for all off-diagonal entries.
  Whenever necessary we let 
 \begin_inset Formula $U=[1]$
 \end_inset
 
  denote a matrix of ones of appropriate size.
- The Hadamard, or componentwise, product of two matrices 
+ The Hadamard product of two matrices 
 \begin_inset Formula $A=[a_{i,j}]$
 \end_inset
 
@@ -986,12 +888,12 @@ Consider the variance of the sum of two random variables
  This can be written as follows.
 \begin_inset Formula 
 \begin{align*}
-\Var{X+Y}={} & \E{(X+Y)^{2}}-\En 2{X+Y}\\
+\Var{X+Y}={} & \E{(X+Y)^{2}}-\En2{X+Y}\\
 ={} & \E{X^{2}+2XY+Y^{2}}-\left(\E{X+Y}\right)^{2}\\
 ={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}-\left(\E X+\E Y\right)^{2}\\
 ={} & \E{X^{2}}+2\E{XY}+\E{Y^{2}}\\
- & -(\En 2X+2\E X\E Y+\En 2Y)\\
-={} & \left(\E{X^{2}}-\En 2X\right)+\left(\E{Y^{2}}-\En 2Y\right)\\
+ & -(\En2X+2\E X\E Y+\En2Y)\\
+={} & \left(\E{X^{2}}-\En2X\right)+\left(\E{Y^{2}}-\En2Y\right)\\
  & +2\E{XY}-2\E X\E Y\\
 ={} & \Var X+\Var Y+2\left(\E{XY}-\E X\E Y\right)\\
 ={} & \Var X+\Var Y+2\Cov XY
@@ -1055,8 +957,6 @@ joint variance,
 \end_inset
 
 .
-\backslash
-
 \begin_inset Formula 
 \begin{align*}
  & \E{(X-\E X)(Y-\E Y)}\\

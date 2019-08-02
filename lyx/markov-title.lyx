@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -32,6 +32,8 @@ fixme
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -61,6 +63,7 @@ fixme
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -69,7 +72,10 @@ fixme
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -114,12 +120,10 @@ lettrine[lraise=0.1]{T}{his}
  compute each.
  There are many motivations for revisiting this document, including providing
  more detailed derivations, including additional results not available in
- the prior edition, and providing the algorithms in R.
+ the prior edition, and providing the algorithms in other languages.
  The previous edition provided the algorithms in Scilab, but more and more
  the author has found that collaborators are more comfortable working with
- R.
- The Scilab algorithms do, of course, still work, and are given in Appendix
- 
+ R and Python.
 \end_layout
 
 \begin_layout Standard
@@ -317,6 +321,13 @@ filename "markov-scilab.lyx"
 
 \begin_inset CommandInset include
 LatexCommand include
+filename "markov-r.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand include
 filename "markov-normal.lyx"
 
 \end_inset
@@ -328,6 +339,8 @@ filename "markov-normal.lyx"
 \begin_inset CommandInset index_print
 LatexCommand printindex
 type "idx"
+name "Index"
+literal "true"
 
 \end_inset
 
