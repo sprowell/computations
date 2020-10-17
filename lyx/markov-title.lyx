@@ -9,6 +9,50 @@
 % How to typeset the first word of a chapter.
 \usepackage{lettrine}
 % \newcommand{chfl}[2]{\lettrine[lraise=0.1]{#1}{#2}}
+
+\usepackage[T1]{fontenc}
+\usepackage{beramono}
+%% LyX would do this for us, but we need to define some items
+%% below that require it, so we explicitly do it now.
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{xcolor}
+%%
+%% Julia definition (c) 2014 Jubobs
+%%
+\lstdefinelanguage{Julia}%
+  {morekeywords={abstract,break,case,catch,const,continue,do,else,elseif,%
+      end,export,false,for,function,immutable,import,importall,if,in,%
+      macro,module,otherwise,quote,return,switch,true,try,type,typealias,%
+      using,while},%
+   sensitive=true,%
+   alsoother={$},%
+   morecomment=[l]\#,%
+   morecomment=[n]{\#=}{=\#},%
+   morestring=[s]{"}{"},%
+   morestring=[m]{'}{'},%
+}[keywords,comments,strings]%
+
+\lstset{%
+    language         = Julia,
+    basicstyle       = \small\selectfont\ttfamily,
+    keywordstyle     = \bfseries\color{blue},
+    stringstyle      = \color{magenta},
+    commentstyle     = \color{ForestGreen},
+    showstringspaces = false,
+}
+
+\lstdefinelanguage{TML}%
+  {keywords={
+    model,end,source,sink,select
+  },
+  sensitive=false,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[s][\bfseries]{[}{]},
+  morestring=[s][\itshape]{(\$}{\$)},
+}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -16,15 +60,16 @@ theorems-ams
 eqs-within-sections
 figs-within-sections
 fixme
+initials
 \end_modules
 \maintain_unincluded_children false
 \language english
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman "default" "default"
-\font_sans "default" "default"
-\font_typewriter "default" "default"
+\font_roman "default" "Latin Modern Roman"
+\font_sans "default" "Latin Modern Sans"
+\font_typewriter "default" "Latin Modern Mono"
 \font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
@@ -102,15 +147,22 @@ Stacy J.
 Preface
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
+\begin_layout Initial
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
 
 
-\backslash
-lettrine[lraise=0.1]{T}{his}
+\begin_inset Argument 3
+status open
+
+\begin_layout Plain Layout
+this
 \end_layout
 
 \end_inset
@@ -121,93 +173,31 @@ lettrine[lraise=0.1]{T}{his}
  There are many motivations for revisiting this document, including providing
  more detailed derivations, including additional results not available in
  the prior edition, and providing the algorithms in other languages.
- The previous edition provided the algorithms in Scilab, but more and more
+ The previous edition provided algorithms for Scilab, but more and more
  the author has found that collaborators are more comfortable working with
- R and Python.
+ Julia and especially Python.
+ For the Scilab algorithms, please see the prior version.
 \end_layout
 
 \begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\Prr}{\mathrm{Pr}\!}
-{\mathrm{Pr}}
+Please note that the author 
+\begin_inset Quotes eld
 \end_inset
 
-
-\begin_inset FormulaMacro
-\newcommand{\Ee}{\mathrm{E}\!}
-{\mathrm{E}}
+learned
+\begin_inset Quotes erd
 \end_inset
 
-
+ Julia specifically two write this book.
+ Improvements to the Julia code presented (i.e., the more Julia-centric way
+ of doing things) is welcome.
 \end_layout
 
 \begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\Varr}{\mathrm{Var}\!}
-{\mathrm{Var}}
-\end_inset
+\begin_inset CommandInset include
+LatexCommand include
+filename "markov-macros.lyx"
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\Pr}[1]{\mathrm{Pr}\!\left[#1\right]}
-{\mathrm{Pr}\left[#1\right]}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\E}[1]{\mathrm{E}\!\left[#1\right]}
-{\mathrm{E}\left[#1\right]}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\En}[2]{\mathrm{E}^{#1}\!\left[#2\right]}
-{\mathrm{E}^{#1}\left[#2\right]}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\Var}[1]{\mathrm{Var}\!\left[#1\right]}
-{\mathrm{Var}\left[#1\right]}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\stddev}[1]{\sigma\!\left[#1\right]}
-{\sigma\left[#1\right]}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\Cov}[2]{\mathrm{Cov}\!\left[#1,#2\right]}
-{\mathrm{Cov}\left[#1,#2\right]}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\Covn}[3]{\mathrm{Cov}^{#1}\!\left[#2,#3\right]}
-{\mathrm{Cov}^{#1}\left[#2,#3\right]}
 \end_inset
 
 
@@ -217,15 +207,22 @@ lettrine[lraise=0.1]{T}{his}
 Acknowledgments
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
+\begin_layout Initial
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
 
 
-\backslash
-lettrine[lraise=0.1]{T}{his}
+\begin_inset Argument 3
+status open
+
+\begin_layout Plain Layout
+this
 \end_layout
 
 \end_inset
@@ -233,7 +230,7 @@ lettrine[lraise=0.1]{T}{his}
  document began life as a summary of Markov computations to answer questions
  in an email discussion with Tjin Merry.
  The discussion of Markov chain usage modeling, of the related computations,
- and of Markov chain-based testing contributed greatly to my understanding
+ and of Markov chain-based testing contributed greatly to my own understanding
  of the subject, and I thank Tjin Merry for prompting this document, and
  for patience with my explanations.
 \end_layout
@@ -312,23 +309,29 @@ filename "markov-appendix.lyx"
 \end_inset
 
 
-\begin_inset CommandInset include
-LatexCommand include
-filename "markov-scilab.lyx"
+\end_layout
 
-\end_inset
-
-
-\begin_inset CommandInset include
-LatexCommand include
-filename "markov-r.lyx"
-
-\end_inset
-
-
+\begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
 filename "markov-normal.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "markov-digits.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand include
+filename "markov-python.lyx"
 
 \end_inset
 

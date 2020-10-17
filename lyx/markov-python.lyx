@@ -86,11 +86,11 @@ initials
 \begin_layout Chapter
 \begin_inset CommandInset label
 LatexCommand label
-name "chap:A-Brief-TML"
+name "chap:Python"
 
 \end_inset
 
-A Brief TML Primer
+Python Algorithms
 \end_layout
 
 \end_body

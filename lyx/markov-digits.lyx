@@ -1,0 +1,971 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsbook
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+initials
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Machine-Precision"
+
+\end_inset
+
+Machine Precision
+\end_layout
+
+\begin_layout Section
+Significant Digits
+\end_layout
+
+\begin_layout Standard
+The author has encountered students who confuse 
+\begin_inset Quotes eld
+\end_inset
+
+significant digits
+\begin_inset Quotes erd
+\end_inset
+
+ with 
+\begin_inset Quotes eld
+\end_inset
+
+digits to the right of the decimal point.
+\begin_inset Quotes erd
+\end_inset
+
+ Significant digits are defined (for the purpose of this text) as follows.
+\end_layout
+
+\begin_layout Itemize
+All non-zero digits are significant.
+ 
+\begin_inset Formula $12.21$
+\end_inset
+
+ has four significant digits.
+\end_layout
+
+\begin_layout Itemize
+Zero digits between two non-zero digits are significant.
+ 
+\begin_inset Formula $10.02$
+\end_inset
+
+ has four significant digits.
+\end_layout
+
+\begin_layout Itemize
+Trailing zeros to the right of the decimal are significant.
+ 
+\begin_inset Formula $12.20$
+\end_inset
+
+ has four significant digits.
+\end_layout
+
+\begin_layout Itemize
+Trailing zeros to the left of the decimal are significant iff there is a
+ decimal point.
+ 
+\begin_inset Formula $10.21$
+\end_inset
+
+ has four significant digits.
+\end_layout
+
+\begin_layout Itemize
+Exact numbers (such as zero and one) have infinitely many significant digits.
+ The exact value 
+\begin_inset Formula $0$
+\end_inset
+
+ (or any value you are told is 
+\begin_inset Quotes eld
+\end_inset
+
+exact
+\begin_inset Quotes erd
+\end_inset
+
+) has infinitely many significant digits.
+\end_layout
+
+\begin_layout Standard
+All the following numbers all contain 
+\emph on
+exactly
+\emph default
+ six significant digits (underlined).
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Formula $0.\underline{700\,241}$
+\end_inset
+
+    
+\begin_inset Formula $\underline{700},\underline{241}$
+\end_inset
+
+    
+\begin_inset Formula $00,\underline{700}.\underline{241}$
+\end_inset
+
+    
+\begin_inset Formula $\underline{70},\underline{024},\underline{1}00$
+\end_inset
+
+    
+\begin_inset Formula $0.00\underline{7\,002\,41}$
+\end_inset
+
+    
+\begin_inset Formula $\underline{7}.\underline{002\,41}\times10^{21}$
+\end_inset
+
+    
+\begin_inset Formula $\underline{1}.\underline{00000}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A number may have less significant digits when we write it down or represent
+ it on a computer.
+ For instance, we can talk about the 210 millionth digit of 
+\begin_inset Formula $\pi$
+\end_inset
+
+, but it is highly unlikely that a computer will represent it with that
+ number of significant digits.
+ Alternately, we can store 1/3 on a computer as a ratio of the exact values
+ 1 and 3, and thus with infinite significant digits.
+ Converting 1/3 to a floating point number requires us to choose some cutoff,
+ such as 
+\begin_inset Formula $0.333\,333\,333\,333\,333\,3$
+\end_inset
+
+, where we represent 1/3 to 16 significant digits.
+\end_layout
+
+\begin_layout Standard
+Ambiguity in the number of significant digits can be avoided by either stating
+ explicitly (
+\begin_inset Formula $14,300$
+\end_inset
+
+ to 
+\emph on
+four
+\emph default
+ significant digits) or by writing a number in scientific notation (
+\begin_inset Formula $1.430\times10^{4}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+For mathematical operations the answer can be 
+\emph on
+no more precise
+\emph default
+ than the least precise number used to obtain the answer.
+ The basic rule is to perform all the operations and then, at the end, round
+ to the correct number of significant digits.
+ Consider 
+\begin_inset Formula $1.430\times10^{4}+76.3$
+\end_inset
+
+.
+ The direct sum gives us 
+\begin_inset Formula $1.43763\times10^{4}$
+\end_inset
+
+.
+ The lowest number of significant digits in the inputs is three for 
+\begin_inset Formula $76.3$
+\end_inset
+
+, so we round the result to three significant digits, giving the answer
+ 
+\begin_inset Formula $1.44\times10^{4}$
+\end_inset
+
+.
+ Likewise, consider that we measure the value 
+\begin_inset Formula $21.63$
+\end_inset
+
+.
+ We multiply it by 20 (exact) and are then asked to find 5% of this value.
+ That is the computation 
+\begin_inset Formula $21.63\times20\times0.05=21.63$
+\end_inset
+
+.
+ Note that this is the final answer, since both 
+\begin_inset Formula $20$
+\end_inset
+
+ and 
+\begin_inset Formula $5\%$
+\end_inset
+
+ are exact values.
+\end_layout
+
+\begin_layout Section
+Machine Representation
+\end_layout
+
+\begin_layout Standard
+Integers have an exact representation on a computer, provided they are in
+ a supported range.
+ For instance, using the usual 
+\begin_inset Quotes eld
+\end_inset
+
+two's complement
+\begin_inset Quotes erd
+\end_inset
+
+ signed representation, an 
+\begin_inset Formula $n$
+\end_inset
+
+-bit integer can hold values in the closed interval 
+\begin_inset Formula $[-2^{n-1},2^{n-1}-1]$
+\end_inset
+
+.
+ As an easy example, a 16-bit integer can hold values in the interval 
+\begin_inset Formula $[-2^{15},2^{15}-1]=[-32768,32767]$
+\end_inset
+
+.
+ If you want an unsigned value you don't need a sign bit and get a value
+ in the interval 
+\begin_inset Formula $[0,2^{n}]$
+\end_inset
+
+.
+ The Julia language provides 8, 16, 32, 64, and 128-bit integers, both signed
+ and unsigned.
+ Julia also provides a 
+\family typewriter
+BigInt
+\family default
+ type that provides for 
+\emph on
+arbitrary precision arithmetic.
+
+\emph default
+ Values of this type expand to hold the complete representation of an integer,
+ provided there is free memory, at the cost of performance.
+\end_layout
+
+\begin_layout Standard
+Floating point values are represented using the IEEE 754 standard.
+ Numbers are represented in scientific notation, but in binary.
+ Since (except for zero) the first bit will always be a one, it is not stored,
+ but is implicit.
+ The number then consists of a significand and an exponent.
+ For instance, think about the value 
+\begin_inset Formula $1/16$
+\end_inset
+
+.
+ This can be represented in binary as 0b0.0001 (we will use the 
+\begin_inset Quotes eld
+\end_inset
+
+0b
+\begin_inset Quotes erd
+\end_inset
+
+ prefix to indicate a number in binary notation).
+ Converting this to scientific notation we get 
+\begin_inset Formula $1\times2^{-4}$
+\end_inset
+
+.
+ In this case the significand is 1., and the exponent is -4.
+ We don't store the leading one, so the stored significand is zero and the
+ exponent (in binary) will be 0b100.
+ We can see exactly how a number is stored by asking Julia to print the
+ number as a bit string.
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+bitstring(1/16)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By default Julia will create a 64-bit floating point value, so the result
+ will be a 64-bit string, consisting of a single sign bit, eleven bits for
+ the biased exponent
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This is done for convenience of comparison.
+ Exponents may be either positive or negative, so they 
+\emph on
+could
+\emph default
+ be stored in the usual two's complement representation, but that makes
+ comparsion harder.
+ By adding the bias of 
+\begin_inset Formula $2^{n-1}-1$
+\end_inset
+
+ to an 
+\begin_inset Formula $n$
+\end_inset
+
+-digit exponent, the exponent is always stored as a positive number.
+\end_layout
+
+\end_inset
+
+, and then 52 bits for the significand (minus the implicit leading zero).
+ For 1/16, we get the following.
+\end_layout
+
+\begin_layout LyX-Code
+0 01111111011 0000000000000000000000000000000000000000000000000000
+\end_layout
+
+\begin_layout LyX-Code
+  <---exp---> <-------------------significand-------------------->
+\end_layout
+
+\begin_layout Standard
+The initial zero is the sign bit (the number is positive, so the bit is
+ zero).
+ The next eleven bits are 1,019 in two's complement, which you probably
+ noticed is not -4.
+ To get the actual exponent, we subtract 1,023 (
+\begin_inset Formula $2^{11-1}-1$
+\end_inset
+
+), giving 
+\begin_inset Formula $1,019-1,023=-4$
+\end_inset
+
+.
+ Here the significand is all zeros, or actually 
+\begin_inset Formula $1.000\ldots$
+\end_inset
+
+.
+ Thus the value is 
+\begin_inset Formula $1\times2^{-4}=1/16$
+\end_inset
+
+, as expected.
+\end_layout
+
+\begin_layout Standard
+You can play around with 
+\family typewriter
+bitstring
+\family default
+ to see how other values are represented.
+ You might try 
+\family typewriter
+bitstring(50)
+\family default
+ and 
+\family typewriter
+bitstring(50.0)
+\family default
+, for instance.
+\end_layout
+
+\begin_layout Section
+Machine Epsilon
+\end_layout
+
+\begin_layout Standard
+All machine computations are subject to error, and it would be irresponsible
+ to present results without a nod to the size of the error induced by those
+ computations.
+ Floating point numbers can only be represented to some maximum level of
+ precision, which we call 
+\emph on
+machine epsilon
+\emph default
+.
+ This precision can be thought of as the difference between a particular
+ floating point number and the next representable floating point number
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Given floating point number 
+\begin_inset Formula $n$
+\end_inset
+
+, the next representable floating point number is the smallest representable
+ value 
+\begin_inset Formula $m$
+\end_inset
+
+ such that 
+\begin_inset Formula $m>n$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+, and is thus relative to a specific floating point number (generally, the
+ larger the number, the greater the distance to the next representable floating
+ point number).
+ Usually machine epsilon is reported for the value 1.0, and can be obtained
+ using the 
+\family typewriter
+eps
+\family default
+ function in Julia.
+ Without an argument, this function returns machine epsilon for 1.0.
+ With an argument it returns machine epsilon for that argument.
+ For example, on the machine I am using now, 
+\family typewriter
+eps()
+\family default
+ returns the value 
+\family typewriter
+2.220446049250313e-16
+\family default
+, while 
+\family typewriter
+eps(10000)
+\family default
+ returns the value 
+\family typewriter
+1.8189894035458565e-12
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+While some values can be stored exactly, it is the case that there may be
+ some error in storing certain values.
+ Consider the following matrix based on frequency counts.
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & 1 & 4\\
+2 & 1 & 0\\
+0 & 1 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+When we normalize this matrix, we obtain the following values.
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & \frac{1}{5} & \frac{4}{5}\\
+\frac{2}{3} & \frac{1}{3} & 0\\
+0 & 1 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+On the second row we see the value 
+\begin_inset Formula $1/3$
+\end_inset
+
+.
+ Suppose we try to store the value as the approximation 
+\begin_inset Formula $0.3333333333333333$
+\end_inset
+
+; that is, store it to 16 significant digits.
+ (We will use 32-bit floats here, just to shorten the representation.) As
+ in the previous section we can see how a number is actually represented
+ using Julia's 
+\family typewriter
+bitstring
+\family default
+ function.
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+bitstring(Float32(1/3))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This value is stored as follows.
+\end_layout
+
+\begin_layout Itemize
+The 32-bit binary representation (in the IEEE 754 standard) is 
+\begin_inset Formula $0011\,1110\,1010\,1010\,1010\,1010\,1010\,1011$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The first bit is a 
+\emph on
+sign bit
+\emph default
+ of zero, since this value is positive.
+\end_layout
+
+\begin_layout Itemize
+The next eight bits are the 
+\emph on
+biased exponent
+\emph default
+ of 125.
+ We subtract 127 (
+\begin_inset Formula $2^{8-1}-1$
+\end_inset
+
+) from this value to get the actual power of 2, so this is 125 - 127 = -2,
+ and we will multiply the significand by 
+\begin_inset Formula $2^{-2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The remaining 23 bits are the 
+\emph on
+significand
+\emph default
+ value.
+ Recall that this value is actually interpreted as the fractional binary
+ number with an implicit leading 
+\begin_inset Quotes eld
+\end_inset
+
+1.
+\begin_inset Quotes erd
+\end_inset
+
+ in front, so we have (in binary) 
+\begin_inset Formula $1.0101\,0101\,0101\,0101\,0101\,011$
+\end_inset
+
+.
+ This value (in decimal) is 
+\begin_inset Formula $1.333\,333\,373\,069\,763\,2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Multiplying the significand of 
+\begin_inset Formula $1.333\,333\,373\,069\,763\,2$
+\end_inset
+
+ by the exponent of 
+\begin_inset Formula $2^{-2}$
+\end_inset
+
+ gives the answer 
+\begin_inset Formula $0.333\,333\,343\,267\,440\,795\,898\,437\,5$
+\end_inset
+
+, which is the value as actually stored.
+\end_layout
+
+\begin_layout Standard
+We can see that the actual stored value is accurate to only the first seven
+ significant digits.
+ We can find this out at runtime by checking machine epsilon for the stored
+ value.
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+x = Float32(1/3)
+\end_layout
+
+\begin_layout Plain Layout
+
+eps(x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This will return the value 
+\begin_inset Formula $2.980\,232\,2\times10^{-8}$
+\end_inset
+
+, indicating representation breaks down at the eigth decimal, and we can
+ only count on seven significant digits.
+ Performing the same analysis for 64 bits reveals the following.
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+x = 1/3
+\end_layout
+
+\begin_layout Plain Layout
+
+eps(x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The result is now 
+\begin_inset Formula $5.551\,115\,123\,125\,783\times10^{-17}$
+\end_inset
+
+, giving us 16 significant digits for the representation.
+ In fact, Julia prints this value as 
+\begin_inset Formula $0.333\,333\,333\,333\,333\,3$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Matrix and Vector Norms
+\end_layout
+
+\begin_layout Definition
+Given a vector space 
+\begin_inset Formula $V$
+\end_inset
+
+, a 
+\emph on
+norm
+\emph default
+ 
+\begin_inset Formula $|\!\cdot\!|$
+\end_inset
+
+ is a mapping 
+\begin_inset Formula $|\!\cdot\!|:V\to\mathbb{R}$
+\end_inset
+
+ that associates a nonnegative real number with each vector such that the
+ following three axioms are satisfied.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+(Triangle inequality) For all scalars 
+\begin_inset Formula $a\in\mathbb{R}$
+\end_inset
+
+ and vectors 
+\begin_inset Formula $u,v\in V$
+\end_inset
+
+, 
+\begin_inset Formula $\left|u+v\right|\le\left|u\right|+\left|v\right|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+(Absolute scalability) For all scalars 
+\begin_inset Formula $a\in\mathbb{R}$
+\end_inset
+
+ and vectors 
+\begin_inset Formula $u\in V$
+\end_inset
+
+, 
+\begin_inset Formula $\left|av\right|=\left|a\right|\left|v\right|$
+\end_inset
+
+, where 
+\begin_inset Formula $\left|a\right|$
+\end_inset
+
+ is the usual absolute value.
+\end_layout
+
+\begin_layout Enumerate
+(Positive) For all vectors 
+\begin_inset Formula $u\in V$
+\end_inset
+
+, 
+\begin_inset Formula $\left|u\right|\ge0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+(Definite) For all vectors 
+\begin_inset Formula $u\in V$
+\end_inset
+
+, if 
+\begin_inset Formula $|u|=0$
+\end_inset
+
+ then 
+\begin_inset Formula $u$
+\end_inset
+
+ is the unique zero vector.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+There are many different vector norms available, including the 
+\begin_inset Quotes eld
+\end_inset
+
+usual
+\begin_inset Quotes erd
+\end_inset
+
+ Euclidian norm 
+\begin_inset Formula $\left\Vert u\right\Vert =\sqrt{u_{1}^{2}+u_{2}^{2}+\cdots+u_{n}^{2}}=\sqrt{u\cdot u}$
+\end_inset
+
+.
+ This is also sometimes called the 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ norm or the 2-norm.
+\end_layout
+
+\begin_layout Standard
+We can extend the idea of a norm to matrices.
+ We can do this by pointing out that it is possible to have a vector space
+ whose elements (the 
+\begin_inset Quotes eld
+\end_inset
+
+vectors
+\begin_inset Quotes erd
+\end_inset
+
+) are matrices.
+ It is common to take an existing vector norm and extend it to matrices
+ (the matrix norm 
+\begin_inset Quotes eld
+\end_inset
+
+induced
+\begin_inset Quotes erd
+\end_inset
+
+ by the vector norm).
+ For instance, we can obtain a matrix norm by choosing the maximum row or
+ column sum across the matrix.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+usual
+\begin_inset Quotes erd
+\end_inset
+
+ Euclidian norm can be extended to matrices by summing over both rows and
+ columns.
+ Let 
+\begin_inset Formula $M=[m_{i,j}]$
+\end_inset
+
+ be a 
+\begin_inset Formula $m\times n$
+\end_inset
+
+ matrix.
+ Then the 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ norm of the matrix can be computed as follows.
+\begin_inset Formula 
+\[
+\left\Vert M\right\Vert =\left(\sum_{i=1}^{m}\sum_{j=1}^{n}m_{i,j}^{2}\right)^{\frac{1}{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conditioning
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a function and let 
+\begin_inset Formula $f'$
+\end_inset
+
+ be an algorithm approximating the function.
+ The 
+\emph on
+absolute error
+\emph default
+ of the approximation for input 
+\begin_inset Formula $x$
+\end_inset
+
+ is 
+\begin_inset Formula $\left|f(x)-f'(x)\right|$
+\end_inset
+
+, and the 
+\emph on
+relative error
+\emph default
+ of the approximation for input 
+\begin_inset Formula $x$
+\end_inset
+
+ is the ratio 
+\begin_inset Formula $\left|f(x)-f'(x)\right|/\left|f(x)\right|$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

@@ -10,6 +10,7 @@
 theorems-ams
 eqs-within-sections
 figs-within-sections
+initials
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -86,15 +87,22 @@ figs-within-sections
 Preliminary Definitions
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
+\begin_layout Initial
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
 
 
-\backslash
-lettrine[lraise=0.1]{T}{his}
+\begin_inset Argument 3
+status open
+
+\begin_layout Plain Layout
+this
 \end_layout
 
 \end_inset
@@ -117,6 +125,8 @@ literal "true"
 \end_inset
 
  for a discussion of probability theory.
+ A solid discussion of these topics would really require a course in measure
+ theory.
 \end_layout
 
 \begin_layout Section
@@ -125,17 +135,402 @@ Algorithms
 
 \begin_layout Standard
 Algorithms to compute all results are provided in the appendices and are
- also available online.
-\begin_inset Note Note
+ also available online
+\begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-Need a more complete discussion here once we realize what we plan to do.
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://stacyprowell.com/markov
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+.
+ The first version of this document provided algorithms for Scilab
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://www.scilab.org/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Scilab
+\end_layout
+
+\end_inset
+
+.
+ Since then the landscape has changed, and it seems most appropriate to
+ provide algorithms in a different language now.
+\end_layout
+
+\begin_layout Standard
+Within the text algorithms are provided in the Julia
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Julia
+\end_layout
+
+\end_inset
+
+ language
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://julialang.org/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+; algorithms in Python
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://python.org
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ are provided in Appendix 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Python"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The Julia algorithms and code snippets assume that the standard 
+\family typewriter
+LinearAlgebra
+\family default
+ package has been imported.
+ At the Julia prompt you might type the following.
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Julia> using LinearAlgebra
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It will be necessary to use several row-stochastic matrices, and these may
+ be constructed from frequency counts through row normalization.
+ Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:row-normalize"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is a simple Julia method to normalize a matrix so that all rows sum to
+ one.
+ The entries in the matrix are assumed to be nonnegative numbers, with no
+ row summing to zero.
+ We use it as follows.
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:row-normalize"
+
+\end_inset
+
+Row normalize a matrix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"""
+\end_layout
+
+\begin_layout Plain Layout
+
+Row normalize a matrix of nonnegative values to
+\end_layout
+
+\begin_layout Plain Layout
+
+produce a row-stochastic matrix.
+  The input
+\end_layout
+
+\begin_layout Plain Layout
+
+matrix cannot have any row summing to zero!
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Examples
+\end_layout
+
+\begin_layout Plain Layout
+
+```julia-repl
+\end_layout
+
+\begin_layout Plain Layout
+
+julia> P = row_norm(A)
+\end_layout
+
+\begin_layout Plain Layout
+
+```
+\end_layout
+
+\begin_layout Plain Layout
+
+"""
+\end_layout
+
+\begin_layout Plain Layout
+
+function row_norm(A::Array)
+\end_layout
+
+\begin_layout Plain Layout
+
+    return A .* (1 ./ (A*ones(size(A)[2])))
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Julia> A = [ 0 1 0 0 0
+\end_layout
+
+\begin_layout Plain Layout
+
+             0 0 1 1 0
+\end_layout
+
+\begin_layout Plain Layout
+
+             0 0 4 2 2
+\end_layout
+
+\begin_layout Plain Layout
+
+             0 1 0 0 3
+\end_layout
+
+\begin_layout Plain Layout
+
+             1 0 0 0 0 ]
+\end_layout
+
+\begin_layout Plain Layout
+
+5×5 Array{Int64,2}:
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0  1  0  0  0
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0  0  1  1  0
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0  0  4  2  2
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0  1  0  0  3
+\end_layout
+
+\begin_layout Plain Layout
+
+ 1  0  0  0  0
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Julia> P = row_norm(A)
+\end_layout
+
+\begin_layout Plain Layout
+
+5×5 Array{Float64,2}:
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0.0  1.0   0.0  0.0   0.0
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0.0  0.0   0.5  0.5   0.0
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0.0  0.0   0.5  0.25  0.25
+\end_layout
+
+\begin_layout Plain Layout
+
+ 0.0  0.25  0.0  0.0   0.75
+\end_layout
+
+\begin_layout Plain Layout
+
+ 1.0  0.0   0.0  0.0   0.0
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From here on we will not show the Julia
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Julia
+\end_layout
+
+\end_inset
+
+ prompt 
+\family typewriter
+Julia>
+\family default
+ or (usually) the output of a command.
 \end_layout
 
 \begin_layout Section
@@ -202,11 +597,11 @@ random variable
 \begin_inset Formula $\Pr{X=x}$
 \end_inset
 
- will be denoted 
+ will be abbreviated 
 \begin_inset Formula $p(x)$
 \end_inset
 
-.
+, where the random variable is understood from context.
  Thus if one has two random variables 
 \begin_inset Formula $X$
 \end_inset
@@ -234,7 +629,7 @@ joint probability
 status open
 
 \begin_layout Plain Layout
-joint probability
+probability!joint
 \end_layout
 
 \end_inset
@@ -242,7 +637,7 @@ joint probability
 
 \emph default
  
-\begin_inset Formula $\Pr{X=x\,\wedge\,Y=y}$
+\begin_inset Formula $\Pr{X=y\,\wedge\,Y=y}$
 \end_inset
 
  will be denoted 
@@ -250,11 +645,27 @@ joint probability
 \end_inset
 
 .
- The conditional probability 
-\begin_inset Formula $\Pr{Y=y\,|\,X=y}$
+ The 
+\emph on
+conditional probability
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+
+\emph on
+probability!conditional
+\end_layout
+
 \end_inset
 
- will be denoted 
+
+\emph default
+ 
+\begin_inset Formula $\Pr{Y=y\,|\,X=x}$
+\end_inset
+
+ will be abbreviated 
 \begin_inset Formula $p(y|x)$
 \end_inset
 
@@ -347,11 +758,11 @@ matrix
 .
  It will often be useful to refer to a single column or row of a matrix.
  We will do this by writing a star (
-\begin_inset Formula $\star$
+\begin_inset Formula $\Any$
 \end_inset
 
 ) for an index, so that 
-\begin_inset Formula $[a_{i,\star}]$
+\begin_inset Formula $[a_{i,\Any}]$
 \end_inset
 
  is the 
@@ -359,7 +770,7 @@ matrix
 \end_inset
 
 th row of a matrix, and 
-\begin_inset Formula $[a_{\star,j}]$
+\begin_inset Formula $[a_{\Any,j}]$
 \end_inset
 
  is the 
@@ -375,7 +786,17 @@ th column of a matrix.
 \begin_inset Formula $A_{d}=[a_{i,j}\delta_{i,j}]$
 \end_inset
 
- denote the matrix consisting of the diagonal of 
+ denote the matrix consisting of the diagonal
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+matrix!diagonal
+\end_layout
+
+\end_inset
+
+ of 
 \begin_inset Formula $A$
 \end_inset
 
@@ -385,7 +806,25 @@ th column of a matrix.
 \end_inset
 
  denote a matrix of ones of appropriate size.
- The Hadamard product of two matrices 
+ The Hadamard
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Hadamard product
+\end_layout
+
+\end_inset
+
+ (
+\begin_inset Quotes eld
+\end_inset
+
+componentwise
+\begin_inset Quotes erd
+\end_inset
+
+) product of two matrices 
 \begin_inset Formula $A=[a_{i,j}]$
 \end_inset
 
@@ -400,6 +839,71 @@ th column of a matrix.
 .
 \end_layout
 
+\begin_layout Standard
+Set builder notation will use a colon for 
+\begin_inset Quotes eld
+\end_inset
+
+such that,
+\begin_inset Quotes erd
+\end_inset
+
+ as in the following definition of the even integers.
+\begin_inset Formula 
+\[
+\mathbb{Z}_{e}=\left\{ n\,:\,n\in\mathbb{Z}^{+}\wedge2|n\right\} =\left\{ n\in\mathbb{Z}^{+}\,:\,2|n\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Significant Digits
+\end_layout
+
+\begin_layout Standard
+An attempt has been made to represent computed values with a consistent
+ number of 
+\emph on
+significant digits
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+
+\emph on
+significant digits
+\end_layout
+
+\end_inset
+
+
+\emph default
+ (typically four) in tables.
+ Spaces are used to break the fractional part into groups of three digits,
+ and commas are used to break the whole part of a number into groups of
+ three.
+ A decimal point is used to separate the whole and fractional parts of a
+ number.
+ For a more complete discussion, please see Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Machine-Precision"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
 \begin_layout Section
 Expectation of random variables
 \end_layout
@@ -408,6 +912,8 @@ Expectation of random variables
 The 
 \emph on
 expectation
+\emph default
+
 \begin_inset Index idx
 status open
 
@@ -418,7 +924,15 @@ expectation
 \end_inset
 
 
-\emph default
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+random variable!expectation
+\end_layout
+
+\end_inset
+
  of a random variable 
 \begin_inset Formula $X$
 \end_inset
@@ -437,6 +951,36 @@ expectation
 
 \end_inset
 
+In the continuous case we have the following Lebesgue integral
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The Lebesgue integral extends the notion of 
+\begin_inset Quotes eld
+\end_inset
+
+integral,
+\begin_inset Quotes erd
+\end_inset
+
+ and addresses some important limitations of the Reimann integral.
+\end_layout
+
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\E X=\int_{X}x\cdot p(x)\,dx
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 As a special case consider a random variable 
 \begin_inset Formula $C$
 \end_inset
@@ -451,7 +995,7 @@ As a special case consider a random variable
 \end_inset
 
 .
- In other words the expectation of a constant is just that constant.
+ In other words the expectation of a constant is that constant.
  Since the value of an expectation is itself a constant, we can conclude
  that 
 \begin_inset Formula $\E{\E X}=\E X$
@@ -523,6 +1067,16 @@ expectation!positivity
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+expectation!absolute value
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula $\E{|X|}\ge\left|\E X\right|$
 \end_inset
 
@@ -556,13 +1110,15 @@ Cauchy-Schwarz inequality
 \begin_inset Formula $\lambda X+Y=0$
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Itemize
 
 \emph on
 Jensen's Inequality
+\emph default
+
 \begin_inset Index idx
 status open
 
@@ -572,8 +1128,6 @@ Jensen's inequality
 
 \end_inset
 
-
-\emph default
 : Let 
 \begin_inset Formula $g:\mathbb{R}\to\mathbb{R}$
 \end_inset
@@ -583,8 +1137,68 @@ Jensen's inequality
 status collapsed
 
 \begin_layout Plain Layout
-Borel sets and functions are important to a rigorous study of probability,
- but can be ignored for the purpose of this text.
+Borel sets and functions are important to a rigorous study of probability
+ and are mentioned here because they are necessary for a proper definition,
+ but Borel sets and functions can be ignored for the purpose of this text.
+ For the curious, a 
+\emph on
+Borel set
+\emph default
+ is a set formed from open or closed subsets of Euclidian space by countable
+ union, countable intersection, or by repeated combinations of these.
+ A Borel 
+\emph on
+function
+\emph default
+ is a function 
+\begin_inset Formula $f$
+\end_inset
+
+ such that the inverse image 
+\begin_inset Formula $f^{-1}(A)$
+\end_inset
+
+ of any open set 
+\begin_inset Formula $A$
+\end_inset
+
+ is a Borel set.
+ A subset of Euclidian space is 
+\emph on
+convex
+\emph default
+ if, for any two points in the set, the line segment joining the two points
+ is entirely in the set.
+ More directly, a function 
+\begin_inset Formula $f$
+\end_inset
+
+ of a real variable 
+\begin_inset Formula $x$
+\end_inset
+
+ is 
+\emph on
+convex
+\emph default
+ iff the following inequality holds.
+\begin_inset Formula 
+\[
+f\left(\frac{x_{1}+x_{2}}{2}\right)\le\frac{f(x_{1})+f(x_{2})}{2}
+\]
+
+\end_inset
+
+
+\emph on
+Borel measurable
+\emph default
+ is an important notion that allows one to make guarantees about the composition
+ of functions and continuity that other notions, such as 
+\emph on
+Lebesgue mesurable
+\emph default
+, do not.
 \end_layout
 
 \end_inset
@@ -594,7 +1208,7 @@ Borel sets and functions are important to a rigorous study of probability,
 \begin_inset Formula $g(\E X)\le\E{g(x)}$
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Standard
@@ -606,7 +1220,17 @@ For two random variables
 \begin_inset Formula $Y$
 \end_inset
 
-, we conclude the following.
+, we conclude the following
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+expectation!product
+\end_layout
+
+\end_inset
+
+.
 \begin_inset Formula 
 \[
 \begin{aligned}\E{XY} & =\sum_{x\in X,y\in Y}xy\cdot p(x\&y)\end{aligned}
@@ -628,19 +1252,35 @@ random variable!independence
 \begin_inset Formula $p(x\&y)=p(x)p(y).$
 \end_inset
 
- In this case we have the following short derivation of an important property.
+ In this case we have the following important property: 
+\begin_inset Formula $\E{XY}=\E X\E Y$
+\end_inset
+
+.
 \begin_inset Formula 
-\begin{align}
-\E{XY} & =\sum_{x\in X,y\in Y}xy\cdot p(x\&y)\nonumber \\
- & =\sum_{x\in X,y\in Y}xy\cdot p(x)p(y)\nonumber \\
- & =\sum_{x\in X,y\in Y}x\cdot p(x)\cdot y\cdot p(y)\nonumber \\
- & =\left(\sum_{x\in X}x\cdot p(x)\right)\left(\sum_{y\in Y}y\cdot p(y)\right)\nonumber \\
- & =\E X\E Y\label{eq:E(XY) indep}
-\end{align}
+\begin{align*}
+\E{XY} & =\int_{X}\int_{Y}xy\,p(x\&y)\,d(xy)\\
+ & =\int_{X}\int_{Y}xy\,p(x)p(y)\,d(xy)\\
+ & =\int_{X}\int_{Y}x\,p(x)\,dx\,y\,p(y)\,dy\\
+ & =\int_{X}x\,p(x)\,dx\int_{Y}y\,p(y)\,dy\\
+ & =\int_{X}x\,p(x)\,dx\,\E Y\\
+ & =\E Y\int_{X}x\,p(x)\,dx\\
+ & =\E Y\E X
+\end{align*}
 
 \end_inset
 
+Note that this derivation only works because 
+\begin_inset Formula $X$
+\end_inset
 
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are independent, separable variables.
+ This result generalizes to finite products of mutually independent random
+ variables.
 \end_layout
 
 \begin_layout Section
@@ -663,6 +1303,8 @@ How far can one expect the value of a random variable
 ? This question is answered by the 
 \emph on
 variance
+\emph default
+
 \begin_inset Index idx
 status open
 
@@ -673,7 +1315,15 @@ variance
 \end_inset
 
 
-\emph default
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+random variable!variance
+\end_layout
+
+\end_inset
+
  
 \begin_inset Formula $\Var X$
 \end_inset
@@ -760,18 +1410,7 @@ Consider two random variables,
 \end_inset
 
 .
- We already know from eq.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:E(XY) indep"
-
-\end_inset
-
- that if 
+ We already know that if 
 \begin_inset Formula $X$
 \end_inset
 
@@ -779,7 +1418,17 @@ reference "eq:E(XY) indep"
 \begin_inset Formula $Y$
 \end_inset
 
- are independent we have 
+ are independent
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+random variable!independence
+\end_layout
+
+\end_inset
+
+ we have 
 \begin_inset Formula $\E{XY}=\E X\E Y$
 \end_inset
 
@@ -801,7 +1450,17 @@ not
 \emph on
 covariance
 \begin_inset Index idx
-status collapsed
+status open
+
+\begin_layout Plain Layout
+random variable!covariance
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
 
 \begin_layout Plain Layout
 covariance
@@ -865,7 +1524,7 @@ completely dependent
  In this special case one has the following derivation.
 \begin_inset Formula 
 \begin{align*}
-\Cov XY & =\E{XY}-\E X\E Y & \mbox{for independent }X,Y\\
+\Cov XY & =\E{XY}-\E X\E Y\\
  & =\E{X^{2}}-\En2X\\
  & =\Var X=\Var Y
 \end{align*}
@@ -944,7 +1603,17 @@ not
 \end_layout
 
 \begin_layout Standard
-An alternate way to think about the covariance is to consider the 
+An alternate way to think about the covariance
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+covariance
+\end_layout
+
+\end_inset
+
+ is to consider the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1042,7 +1711,18 @@ Chebyshev inequality
 \end_inset
 
 .
- This states that the probability that the observed value 
+ This states
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This result will not be proven here, but it is interesting to note that
+ it is relatively easy to prove from another inequality: Markov's Inequality.
+\end_layout
+
+\end_inset
+
+ that the probability that the observed value 
 \begin_inset Formula $x$
 \end_inset
 
@@ -1069,7 +1749,7 @@ Chebyshev inequality
 .
 \begin_inset Formula 
 \begin{equation}
-\Pr{\left|X-\E X\right|\ge k}\le\frac{\Var X}{k^{2}}\label{eq:cheb}
+\Pr{\left|X-\E X\right|}\ge k\le\frac{\Var X}{k^{2}}\label{eq:cheb}
 \end{equation}
 
 \end_inset
@@ -1095,7 +1775,81 @@ statistically conservative
 \emph default
  upper bound.
  It may be possible to do much better if more is known about the random
- variable.
+ variable
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In particular, if you know your random variable is normally distributed,
+ you can do much better.
+\end_layout
+
+\end_inset
+
+.
+ An equivalent version of the inequality that is often more useful can be
+ obtained with a change of variable.
+ Let 
+\begin_inset Formula $k=v\stddev X$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{align*}
+\Pr{\left|X-\E X\right|\ge k} & \le\frac{\Var X}{k^{2}}\\
+\Pr{\left|X-\E X\right|\ge v\stddev X} & \le\frac{\stddevn2X}{\left(v\stddev X\right)^{2}}\\
+\Pr{\left|X-\E X\right|\ge v\stddev X} & \le\frac{\stddevn2X}{v^{2}\stddevn2X}\\
+\Pr{\left|X-\E X\right|\ge v\stddev X} & \le\frac{1}{v^{2}}
+\end{align*}
+
+\end_inset
+
+This is only useful when 
+\begin_inset Formula $v>1$
+\end_inset
+
+.
+ For instance, when 
+\begin_inset Formula $v=3$
+\end_inset
+
+ we have the following.
+\begin_inset Formula 
+\[
+\Pr{\left|X-\E X\right|\ge3\stddev X}\le\frac{1}{9}
+\]
+
+\end_inset
+
+That is, the probability that you are more than three standard deviations
+ from the mean is no greater than about 11%.
+ Another way of looking at this is that about 89% of all observations will
+ be within three standard deviations from the mean
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Again, knowing more about the random variable can 
+\emph on
+significantly
+\emph default
+ improve this.
+ If the random variable is normally distributed, then you can expect 99.7%
+ of observations to be within three standard deviations from the mean.
+\end_layout
+
+\end_inset
+
+.
+ In simpler terms, about 
+\begin_inset Formula $1-1/v^{2}$
+\end_inset
+
+ of the observations will be within 
+\begin_inset Formula $v$
+\end_inset
+
+ standard deviations from the mean.
 \end_layout
 
 \begin_layout Standard
@@ -1121,7 +1875,8 @@ confidence
 \begin{align*}
 0.95 & \le\frac{\Var X}{k^{2}}\\
 k^{2} & \le\frac{\Var X}{0.95}\\
-k & \le\sqrt{\frac{\Var X}{0.95}}
+k & \le\sqrt{\frac{\Var X}{0.95}}\\
+k & \le\frac{\stddev X}{\sqrt{0.95}}
 \end{align*}
 
 \end_inset
@@ -1146,7 +1901,7 @@ at least
 
 \begin_inset Formula 
 \[
-\left[\E X-\sqrt{\frac{\Var X}{0.95}},\E X+\sqrt{\frac{\Var X}{0.95}}\right]
+\left[\E X-\frac{\stddev X}{\sqrt{0.95}},\E X+\frac{\stddev X}{\sqrt{0.95}}\right]
 \]
 
 \end_inset
