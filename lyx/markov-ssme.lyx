@@ -1,0 +1,880 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsbook
+\use_default_options true
+\begin_removed_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_removed_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Single-Step Maximum Entropy with Unknowns
+\end_layout
+
+\begin_layout Standard
+The derivation in this appendix is taken from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "prowell2000tml"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Given a probability distribution 
+\begin_inset Formula $P=\{p_{1},p_{2},\ldots,p_{n}\}$
+\end_inset
+
+, the entropy is given by the following formula.
+\begin_inset Formula 
+\[
+\H P=\sum_{i=1}^{n}p_{i}\lg p_{i}
+\]
+
+\end_inset
+
+Note that this computes the entropy in bits using logarithms in base two.
+ To simplify the math in this chapter we will instead use the natural logarithm,
+ but keep in mind that the difference is multiplication by a constant.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Recall that 
+\begin_inset Formula $\log_{a}x=\log_{b}x/\log_{b}a$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A set of relative weights 
+\begin_inset Formula $W=\{w_{1},w_{2},\ldots,w_{n}\}$
+\end_inset
+
+, where each 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ is a positive real value, can be converted into probabilities by normalization.
+ Let the total of the weights be 
+\begin_inset Formula $T=\sum_{i=1}^{n}w_{i}$
+\end_inset
+
+.
+ Then the entropy in terms of the relative weights is as follows.
+\begin_inset Formula 
+\begin{equation}
+\H W=\sum_{i=1}^{n}\frac{w_{i}}{T}\ln\frac{w_{i}}{T}\label{eq:ssme-1}
+\end{equation}
+
+\end_inset
+
+Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Entropy-of-relative"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ computes the entropy of a distribution given a set of relative weights.
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Entropy-of-relative"
+
+\end_inset
+
+Entropy of relative weights
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"""
+\end_layout
+
+\begin_layout Plain Layout
+
+Compute the entropy (in bits) of the given distribution, where
+\end_layout
+
+\begin_layout Plain Layout
+
+the elements of the distribution are relative weights.
+  The
+\end_layout
+
+\begin_layout Plain Layout
+
+supplied weights should be non-negative values, but no
+\end_layout
+
+\begin_layout Plain Layout
+
+checking is done.
+  Not all weights can be zero, or an error
+\end_layout
+
+\begin_layout Plain Layout
+
+will occur.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+The entropy is computed in *bits*, or using base 2 logarithms.
+\end_layout
+
+\begin_layout Plain Layout
+
+So a choice among 4 different options of equal weight will
+\end_layout
+
+\begin_layout Plain Layout
+
+have entropy of 2 bits.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Examples
+\end_layout
+
+\begin_layout Plain Layout
+
+```julia
+\end_layout
+
+\begin_layout Plain Layout
+
+julia> h = get_entropy([1,2,7,9])
+\end_layout
+
+\begin_layout Plain Layout
+
+```
+\end_layout
+
+\begin_layout Plain Layout
+
+"""
+\end_layout
+
+\begin_layout Plain Layout
+
+function get_entropy(weights::Array)
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Get the sum of all the weights.
+\end_layout
+
+\begin_layout Plain Layout
+
+    T = sum(weights)
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Compute the entropy.
+\end_layout
+
+\begin_layout Plain Layout
+
+    return foldl((h,w) -> h = h - w/T*log(w/T)/log(2.0),
+\end_layout
+
+\begin_layout Plain Layout
+
+        weights; init=0.0)
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assume that 
+\begin_inset Formula $k$
+\end_inset
+
+ of the weights are known, for 
+\begin_inset Formula $1\le k<n$
+\end_inset
+
+, and that the remaining 
+\begin_inset Formula $n-k$
+\end_inset
+
+ weights are unknown.
+ Without loss of generality, assume that the known weights are 
+\begin_inset Formula $w_{1},w_{2},\ldots,w_{k}$
+\end_inset
+
+.
+ Note that in this case the total 
+\begin_inset Formula $T$
+\end_inset
+
+ is also unknown.
+ Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be rewritten to split the contribution from the known and unknown weights
+ as follows.
+\begin_inset Formula 
+\begin{equation}
+H[W]=-\overbrace{\sum_{i=1}^{k}\frac{w_{i}}{T}\ln\frac{w_{i}}{T}}^{\mbox{known}}-\overbrace{\sum_{i=k+1}^{n}\frac{w_{i}}{T}\ln\frac{w_{i}}{T}}^{\mbox{unknown}}\label{eq:ssme-2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The challenge is to choose values for each of the unknown weights so that
+ the overall entropy is maximized.
+ Entropy is maximized for a uniform distribution, so to maximize the entropy
+ the same value must be chosen for every unknown weight.
+ Let that weight be 
+\begin_inset Formula $u=w_{k+1}=w_{k+2}=\cdots=w_{n}$
+\end_inset
+
+.
+ Substituting into eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ gives the following.
+\begin_inset Formula 
+\begin{align}
+\H W & =-\sum_{i=1}^{k}\frac{w_{i}}{T}\ln\frac{w_{i}}{T}-\sum_{i=k+1}^{n}\frac{u}{T}\ln\frac{u}{T}\nonumber \\
+ & =-\sum_{i=1}^{k}\frac{w_{i}}{T}\ln\frac{w_{i}}{T}-(n-k)\frac{u}{T}\ln\frac{u}{T}\label{eq:ssme-3}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let the sum of the known values be denoted 
+\begin_inset Formula $K=\sum_{i=1}^{k}w_{i}$
+\end_inset
+
+, and let the 
+\begin_inset Quotes eld
+\end_inset
+
+partial entropy
+\begin_inset Quotes erd
+\end_inset
+
+ of the known weights be denoted 
+\begin_inset Formula $E=\sum_{i=1}^{k}w_{i}\ln w_{i}$
+\end_inset
+
+.
+ Substituting into eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ gives the following.
+\begin_inset Formula 
+\begin{align}
+\H W & =-\frac{1}{T}\left[\sum_{i=1}^{k}w_{i}\ln\frac{w_{i}}{T}+(n-k)u\ln\frac{u}{T}\right]\nonumber \\
+ & =-\frac{1}{T}\left[\sum_{i=1}^{k}w_{i}\left(\ln w_{i}-\ln T\right)+(n-k)u\left(\ln u-\ln T\right)\right]\nonumber \\
+ & =-\frac{1}{T}\left[\sum_{i=1}^{k}w_{i}\ln w_{i}-\sum_{i=1}^{k}w_{i}\ln T+(n-k)u\left(\ln u-\ln T\right)\right]\nonumber \\
+ & =-\frac{1}{T}\left[E-K\ln T+(n-k)u\left(\ln u-\ln T\right)\right]\label{eq:ssme-4}
+\end{align}
+
+\end_inset
+
+Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is written in terms of two unknown quantities: 
+\begin_inset Formula $T$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Note that the value for the unknown weight 
+\begin_inset Formula $u$
+\end_inset
+
+ can be derived from the total weight 
+\begin_inset Formula $T$
+\end_inset
+
+ as follows.
+\begin_inset Formula 
+\begin{equation}
+u=\frac{T-K}{n-k}\label{eq:ssme-5}
+\end{equation}
+
+\end_inset
+
+Substituting eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ into eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ results in the following equation.
+\begin_inset Formula 
+\begin{align}
+\H W & =-\frac{1}{T}\left[E-K\ln T+(n-k)\frac{T-K}{n-k}\left(\ln\frac{T-K}{n-k}-\ln T\right)\right]\nonumber \\
+ & =-\frac{1}{T}\left[E-K\ln T+(T-K)\left(\ln\frac{T-K}{n-k}-\ln T\right)\right]\nonumber \\
+ & =-\frac{1}{T}\left[E-K\ln T+(T-K)\ln\frac{T-K}{n-k}-(T-K)\ln T\right]\nonumber \\
+ & =-\frac{1}{T}\left[E-K\ln T+(T-K)\ln\frac{T-K}{n-k}-T\ln T+K\ln T\right]\nonumber \\
+ & =-\frac{1}{T}\left[E+(T-K)\ln\frac{T-K}{n-k}-T\ln T\right]\nonumber \\
+ & =-\frac{E}{T}-\frac{T-K}{T}\ln\frac{T-K}{n-k}+\ln T\label{eq:ssme-6}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ expresses the entropy in terms of a single unknown, 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ The maximum value will occur when the derivative of eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-6"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is zero.
+ The derivative of the first term with respect to 
+\begin_inset Formula $T$
+\end_inset
+
+ is taken as follows.
+\begin_inset Formula 
+\begin{align}
+\frac{d}{dT}\left[-\frac{E}{T}\right] & =-E\frac{d}{dT}\frac{1}{T}\nonumber \\
+ & =\frac{E}{T^{2}}\label{eq:ssme-d1}
+\end{align}
+
+\end_inset
+
+The derivative of the second term is taken as follows.
+\begin_inset Formula 
+\begin{align}
+\frac{d}{dT}\left[-\frac{T-K}{T}\ln\frac{T-K}{n-k}\right] & =-\frac{T-K}{T}\left[\frac{d}{dT}\ln\frac{T-K}{n-k}\right]-\ln\frac{T-K}{n-k}\left[\frac{d}{dT}\frac{T-K}{T}\right]\nonumber \\
+ & =-\frac{T-K}{T}\left[\frac{n-k}{T-K}\right]\left[\frac{1}{n-k}\right]-\ln\frac{T-K}{n-k}\left[\frac{K}{T^{2}}\right]\nonumber \\
+ & =-\frac{1}{T}-\ln\frac{T-K}{n-k}\left[\frac{K}{T^{2}}\right]\label{eq:ssme-d2}
+\end{align}
+
+\end_inset
+
+The derivative of the third term is taken as follows.
+\begin_inset Formula 
+\begin{equation}
+\frac{d}{dT}\left[\ln T\right]=\frac{1}{T}\label{eq:ssme-d3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Combining eqs.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-d1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-d2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-d3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, gives the complete derivative.
+\begin_inset Formula 
+\begin{align}
+\frac{d}{dT}\H W & =\frac{E}{T^{2}}-\frac{1}{T}-\ln\frac{T-K}{n-k}\left[\frac{K}{T^{2}}\right]+\frac{1}{T}\nonumber \\
+ & =\frac{E}{T^{2}}-\ln\frac{T-K}{n-k}\left[\frac{K}{T^{2}}\right]\nonumber \\
+ & =\frac{E-K\ln\frac{T-K}{n-k}}{T^{2}}\label{eq:ssme-d}
+\end{align}
+
+\end_inset
+
+Note that eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is zero when the numerator is zero.
+\begin_inset Formula 
+\begin{align}
+0 & =E-K\ln\frac{T-K}{n-k}\nonumber \\
+E & =K\ln\frac{T-K}{n-k}\nonumber \\
+\frac{E}{K} & =\ln\frac{T-K}{n-k}\nonumber \\
+e^{\frac{E}{K}} & =\frac{T-K}{n-k}\nonumber \\
+e^{\frac{E}{K}} & =u\label{eq:ssme-u}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Eq.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ssme-u"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ gives the value for the unknown weight 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Note that this result is 
+\emph on
+independent of the number of unknown values
+\emph default
+.
+ It is worth noting that if 
+\begin_inset Formula $E$
+\end_inset
+
+ is computed using logarithms of base 
+\begin_inset Formula $a$
+\end_inset
+
+, then the result will actually be 
+\begin_inset Formula $a^{E/K}$
+\end_inset
+
+, instead.
+ The base makes 
+\emph on
+no difference in the result
+\emph default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Consider the entropy expression 
+\begin_inset Formula $x\log_{a}x$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $a^{x\log_{a}x}=\left(a^{\log_{a}x}\right)^{x}=x^{x}$
+\end_inset
+
+.
+ The base has vanished.
+\end_layout
+
+\end_inset
+
+; one must simply be consistent.
+ Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Compute-entropy-maximizing-weigh"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ computes the value of 
+\begin_inset Formula $u$
+\end_inset
+
+ given the set of known weights.
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Compute-entropy-maximizing-weigh"
+
+\end_inset
+
+Compute entropy-maximizing weight
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"""
+\end_layout
+
+\begin_layout Plain Layout
+
+Compute a weight that maximizes the entropy of the
+\end_layout
+
+\begin_layout Plain Layout
+
+distribution given the other, known weights.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Examples
+\end_layout
+
+\begin_layout Plain Layout
+
+```julia
+\end_layout
+
+\begin_layout Plain Layout
+
+julia> u = get_emax_weight([1,2,7,9])
+\end_layout
+
+\begin_layout Plain Layout
+
+```
+\end_layout
+
+\begin_layout Plain Layout
+
+"""
+\end_layout
+
+\begin_layout Plain Layout
+
+function get_emax_weight(weights::Array)
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Compute the sum of the weights.
+\end_layout
+
+\begin_layout Plain Layout
+
+    K = sum(weights)
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Compute the partial entropy of the weights.
+\end_layout
+
+\begin_layout Plain Layout
+
+    E = foldl((h,w) -> h = h + w * log(w), weights; init=0.0)
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Return the value to use to maximize the single-step entropy.
+\end_layout
+
+\begin_layout Plain Layout
+
+    return exp(E/K)
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
