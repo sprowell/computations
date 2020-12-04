@@ -203,5 +203,14 @@ Definitions of Mathematical Macros
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\H}[1]{\mbox{H}\left[#1\right]}
+{\mbox{H}\left[#1\right]}
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document

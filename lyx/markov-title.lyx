@@ -331,6 +331,13 @@ filename "markov-digits.lyx"
 
 \begin_inset CommandInset include
 LatexCommand include
+filename "markov-ssme.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand include
 filename "markov-python.lyx"
 
 \end_inset
